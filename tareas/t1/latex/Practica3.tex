@@ -1,0 +1,62 @@
+\documentclass{article}
+
+% Idioma
+\usepackage[spanish,es-nodecimaldot,es-tabla]{babel}
+
+% Fuentes (XeLaTeX)
+\usepackage{fontspec}
+
+%----- Configuración del estilo del documento------%
+\usepackage{epsfig,graphicx}
+\usepackage[left=2.5cm,right=2.5cm,top=1.8cm,bottom=2.3cm]{geometry}
+\usepackage{multicol}
+
+%------ Paquetes matemáticos --------%
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{verbatim}
+\usepackage[shortlabels]{enumitem}
+\usepackage{venndiagram}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\renewcommand{\proofname}{Demostración}
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tocloft}
+\usepackage{setspace}
+\usepackage{comment}
+\usepackage{float}
+
+\graphicspath{{./figs/}}
+
+\renewcommand\cftsecpresnum{\S}
+\renewcommand\cftsubsecpresnum{\S}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+
+\begin{document}
+	
+{
+	\setlength{\parindent}{0pt} 
+	\setlength{\parskip}{0em} 
+	
+	\input{Portada.tex}
+}
+
+\begin{enumerate}
+	\item \input{contenidos/p1.tex}
+	\item \input{contenidos/p2.tex}
+	\item \input{contenidos/p3.tex}
+\end{enumerate}
+
+
+
+\end{document}
