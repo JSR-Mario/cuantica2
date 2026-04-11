@@ -1,2 +1,67 @@
-{\bfseries }
+{\bfseries
+
+Deutsch-Jozsa con la función paridad. Considere la función $f:\{0,1\}^3 \rightarrow \{0,1\}$ definida por $f(x) = x_1 \oplus x_2 \oplus x_3$, es decir, la paridad de los tres bits.
+Aplique el algoritmo de Deutsch-Jozsa paso a paso para $n=3$, mostrando el estado después de cada etapa (inicialización, primera Hadamard, oráculo, segunda Hadamard).
+Calcule explícitamente el estado final y verifique que la probabilidad de medir $\vert 000 \rangle$ en el primer registro es cero, lo que indica que la función es balanceada. (Puede usar la fórmula general o hacer el cálculo término a término.)}
+
+\vspace{.5cm}
+\begin{quote}
+
+\begin{enumerate}
+    \item \textbf{Inicialización }
+        $$
+        \ket{\psi_0} = \ket{000} \otimes \ket{1}
+        $$
+
+    \item \textbf{Primera Hadamard sobre el primer registro.*} 
+        \begin{align*}
+            \ket{\psi_1} = H^{\otimes 4} \ket{\psi_{0}} &= \frac{1}{\sqrt{2^4}} (\ket{0}+\ket{1})
+            \otimes (\ket{0}+\ket{1})\otimes (\ket{0}+\ket{1}) \otimes (\ket{0}-\ket{1}) \\
+                                                        &= \frac{1}{\sqrt{2^3}} \left(\sum _{x
+                                                                \in \{0,1\}^3} \ket{x} \right)
+                                                                \otimes \ket{-}
+        \end{align*}
+
+    \item \textbf{Aplicación del oráculo $U_f$}
+
+        Otra vez vamos a aplicar la regla del phase kickback:
+        \begin{align*}
+            \ket{\psi_2} = U_f \ket{\psi_1} &= \frac{1}{\sqrt{2^3}} U_f \left(\sum _{x
+                                                                \in \{0,1\}^3} \ket{x} \right)
+                                                                \otimes \ket{-} \\ 
+                                            &= \frac{1}{\sqrt{2^3}} (\ket{000} - \ket{001} - \ket{010} +
+                                            \ket{011} - \ket{100} + \ket{101} + \ket{110} -
+                                            \ket{111} )\ket{-}
+        \end{align*}
+
+    \item \textbf{Segunda Hadamard sobre el primer registro.}
+
+        Antes que nada voy a factorizar para que sea mas facil, quitamos el factor de normalizacion
+        y el ultimo registro por ahora:
+        \begin{align*}
+            \ket{0} (\ket{00}-\ket{01}-\ket{10}+\ket{11}) - \ket{1} (\ket{00}
+            -\ket{01}-\ket{10}+\ket{11}) &= (\ket{0}-\ket{1}) \otimes
+            (\ket{00}-\ket{01}-\ket{10}+\ket{11}) \\ 
+            (\ket{0}-\ket{1}) \otimes ( \ket{0} (\ket{0}-\ket{1}) - \ket{1}(\ket{0}-\ket{1})) &=
+            (\ket{0}-\ket{1}) \otimes (\ket{0}-\ket{1})\otimes (\ket{0}-\ket{1}) 
+        \end{align*}
+
+        Ahora si:
+        \begin{align*}
+            \ket{\psi_3} = H^{\otimes 3} \ket{\psi_2} = H^{\otimes 3} \ket{-} \otimes \ket{-}
+            \otimes \ket{-} \otimes \ket{-} = \ket{111} \otimes \ket{-} 
+        \end{align*}
+\end{enumerate}
+
+    \textbf{Calcular la probabilidad de medir $\ket{000}$ en el primer registro y confirmar que la
+    función es balanceada.}
+
+    $$
+    P(000) = |\bra{000}\ket{111}| ^2 = 0
+    $$
+
+    Al ser ortogonales la probabilidad es 0 y demostramos que es una función balanceada. 
+\end{quote}
+\vspace{.5cm}
+
 

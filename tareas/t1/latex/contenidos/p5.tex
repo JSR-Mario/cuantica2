@@ -1,2 +1,8 @@
-{\bfseries }
+{\bfseries
+
+Demostración general de la ortogonalidad en Simon. En el algoritmo de Simon, después de aplicar el oráculo $U_f$ y medir el segundo registro, el estado del primer registro colapsa a una superposición de la forma
+$$ \vert \phi \rangle = \frac{1}{\sqrt{2}}(\vert x_0 \rangle + \vert x_0 \oplus s \rangle), $$
+donde $x_0$ es una de las dos preimágenes del valor medido en el segundo registro. A continuación se aplica la segunda transformada de Hadamard $H^{\otimes n}$ al primer registro. Demuestre que el estado resultante es
+$$ H^{\otimes n} \vert \phi \rangle = \frac{1}{\sqrt{2^{n-1}}} \sum_{z:z\cdot s=0} (-1)^{z \cdot x_0} \vert z \rangle. $$
+Concluya que cualquier resultado $z$ de la medición final satisface $z \cdot s = 0 \pmod 2$. (Sugerencia: use la expresión $H^{\otimes n} \vert x \rangle = \frac{1}{\sqrt{2^n}} \sum_z (-1)^{z \cdot x} \vert z \rangle$.)}
 

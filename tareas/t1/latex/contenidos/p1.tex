@@ -1,2 +1,93 @@
-{\bfseries }
+{\bfseries
 
+Deutsch-Jozsa con la función XOR. Considere la función $f:\{0,1\}^2 \rightarrow \{0,1\}$ definida por $f(00)=0$, $f(01)=1$, $f(10)=1$, $f(11)=0$ (es decir, la función XOR de los dos bits).
+Aplique el algoritmo de Deutsch-Jozsa paso a paso para $n=2$, mostrando el estado después de cada etapa:
+\begin{itemize}
+    \item Inicialización: $\vert \psi_0 \rangle = \vert 00 \rangle \otimes \vert 1 \rangle$.
+    \item Primera Hadamard sobre el primer registro.
+    \item Aplicación del oráculo $U_f$ (que actúa como $\vert x \rangle \vert y \rangle \mapsto \vert x \rangle \vert y \oplus f(x) \rangle$).
+    \item Segunda Hadamard sobre el primer registro.
+\end{itemize}
+Finalmente, calcule la probabilidad de medir $\vert 00 \rangle$ en el primer registro y verifique
+que es nula, lo que confirma que la función es balanceada.}
+
+\vspace{.5cm}
+
+\begin{quote}
+    \begin{enumerate}
+        \item \textbf{Inicialización }
+            $$
+            \vert \psi_0 \rangle = \vert 00 \rangle \otimes \vert 1 \rangle
+            $$
+
+        \item \textbf{Primera Hadamard sobre el primer registro.* } (aquí dice solo sobre
+            el primer registro pero cuando busque para hacerlo todos aplican H a todos los
+            registros, seguí esta práctica)
+
+            \begin{align*}
+                \vert \psi_1 \rangle = H^{\otimes 3} \vert \psi_0 \rangle  &=  H^{\otimes 2}\vert 00
+                \rangle  H\otimes \vert 1 \rangle  \\ 
+                                                                            &=  \frac{1}{2\sqrt{2}}
+                                                                            (\ket{0}+\ket{1})
+                                                                            \otimes (\ket{0}+\ket{1})
+                                                                            \otimes (\ket{0}-\ket{1})\\
+            \end{align*}
+
+        \item \textbf{Aplicación del oráculo $U_f$}
+
+            Primero voy a reescribir para que se vea mas bonito:
+            \begin{align*}
+                \frac{1}{2\sqrt{2}} (\ket{0}+\ket{1}) \otimes (\ket{0}+\ket{1}) \otimes
+                (\ket{0}-\ket{1}) &= \frac{1}{2} (\ket{00} + \ket{01} + \ket{10} + \ket{11})
+                \otimes \ket{-} \\
+                                  &= \frac{1}{2} (\ket{00}\ket{-} + \ket{01}\ket{-} + \ket{10}\ket{-} + \ket{11}\ket{-}) 
+            \end{align*}
+
+            Como nuestro segundo registro esta en $\ket{-}$, sabemos que habra phase kickback y
+            podemos reducir la regla:
+            $$
+            U_f \ket{x} \ket{-} = (-1)^{f(x)}  \ket{x} \ket{-}
+            $$
+
+            Con esto, y el los valores de la función resolvemos:
+
+            \begin{align*}
+                \ket{\psi_2} = \frac{1}{2} U_f(\ket{00}\ket{-} + \ket{01}\ket{-} + \ket{10}\ket{-} +
+                \ket{11}\ket{-}) = \\ 
+                \frac{1}{2} (U_f\ket{00}\ket{-} + U_f\ket{01}\ket{-} + U_f\ket{10}\ket{-} +
+                U_f\ket{11}\ket{-}) = \\
+                \frac{1}{2} (\ket{00}\ket{-} -\ket{01}\ket{-} -\ket{10}\ket{-}
+                + \ket{11}\ket{-})
+            \end{align*}
+
+        \item \textbf{Segunda Hadamard sobre el primer registro.}
+
+            Vamos a reescribir para que quede mas bonito:
+            $$
+            \ket{\psi_2} = \frac{1}{2} (\ket{0} (\ket{0} -\ket{1})
+            -\ket{1} (\ket{0} - \ket{1})) \otimes \ket{-} = \frac{1}{2} ((\ket{0}
+            -\ket{1}) \otimes (\ket{0} - \ket{1})) \otimes \ket{-} =
+            \ket{-}\otimes \ket{-}\otimes \ket{-}
+            $$
+
+            Ahora, trivialmente:
+            \begin{align*}
+                \ket{\psi_3} = H^{\otimes 2} \ket{\psi_2} = H^{\otimes
+                2}(\ket{-}\otimes \ket{-}\otimes \ket{-}) &= H \ket{-}\otimes
+                H \ket{-} \otimes \ket{-} \\
+                                                          &= \ket{1} \otimes \ket{1} \otimes \ket{-} \\
+            \end{align*}
+    \end{enumerate}
+
+    \textbf{Calcular la probabilidad de medir $\ket{00}$ en el primer registro y confirmar que la
+    función es balanceada.}
+
+    $$
+    P(00) = |\bra{00}\ket{11}| ^2 = 0
+    $$
+
+    Sabemos que es igual a 0 porque son ortonormales. Debido a que la probabilidad es exactamente 0
+    se verifica que la función es balanceada.
+\end{quote}
+
+\vspace{.5cm}

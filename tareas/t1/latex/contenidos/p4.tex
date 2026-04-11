@@ -1,2 +1,11 @@
-{\bfseries }
+{\bfseries
+
+Análisis de la probabilidad de obtener vectores linealmente independientes en Simon. Sea $f:\{0,1\}^3 \rightarrow \{0,1\}^3$ una función 2 a 1 con período $s \neq 000$. En cada ejecución del algoritmo de Simon, la medición del primer registro produce un vector $z$ en el subespacio
+$$S = \{z \in \{0,1\}^3 : z \cdot s = 0\},$$
+el cual tiene $2^{3-1}=4$ elementos (uno de ellos es el vector cero). La distribución de probabilidad sobre $S$ es uniforme.
+\begin{enumerate}
+    \item[a)] ¿Cuál es la probabilidad de que en una ejecución se obtenga un vector no nulo?
+    \item[b)] Suponga que se realizan tres ejecuciones independientes del algoritmo. Calcule la probabilidad de que los vectores obtenidos contengan al menos dos vectores distintos y no nulos. (Nota: en un espacio vectorial sobre $\mathbb{F}_2$ dos vectores no nulos distintos son siempre linealmente independientes. Por tanto, con dos de ellos se puede determinar $s$ resolviendo el sistema lineal.)
+    \item[c)] ¿Cuál es la probabilidad de que después de tres ejecuciones no se pueda determinar $s$ (es decir, que no se hayan obtenido dos vectores distintos no nulos)?
+\end{enumerate}}
 

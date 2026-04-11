@@ -1,2 +1,14 @@
-{\bfseries }
+{\bfseries
+
+Simulación de Simon para un período $s=110$. Sea $f:\{0,1\}^3 \rightarrow \{0,1\}^3$ definida por
+$$
+f(x) = \begin{cases}
+x & \text{si el primer bit de } x \text{ es } 0 \\
+x \oplus 110 & \text{si el primer bit de } x \text{ es } 1
+\end{cases}
+$$
+\begin{enumerate}
+    \item[a)] Verifique que $f$ es 2 a 1 y determine su período $s$.
+    \item[b)] Simule una ejecución del algoritmo de Simon con dos registros de 3 qubits inicializados en $\vert 000 \rangle \vert 000 \rangle$. Aplique la primera Hadamard, luego el oráculo $U_f$ (que actúa como $\vert x \rangle \vert y \rangle \mapsto \vert x \rangle \vert y \oplus f(x) \rangle$), y suponga que al medir el segundo registro se obtiene el resultado $000$. Calcule el estado colapsado del primer registro, aplique la segunda Hadamard y determine los posibles resultados de la medición del primer registro, junto con sus probabilidades. Compruebe que todos ellos satisfacen $z \cdot s = 0 \pmod 2$.
+\end{enumerate}}
 
