@@ -9,3 +9,47 @@ el cual tiene $2^{3-1}=4$ elementos (uno de ellos es el vector cero). La distrib
     \item[c)] ¿Cuál es la probabilidad de que después de tres ejecuciones no se pueda determinar $s$ (es decir, que no se hayan obtenido dos vectores distintos no nulos)?
 \end{enumerate}}
 
+\vspace{.5cm}
+
+\begin{quote}
+    \begin{enumerate}
+        \item[a)] \textbf{¿Cuál es la probabilidad de que en una ejecución se obtenga un vector no nulo?}
+
+            El subespacio $S$ tiene 4 elementos: el vector nulo $000$ y 3 vectores no nulos. Dado que la distribución de probabilidad es uniforme, la probabilidad de medir el vector nulo es de $1/4$. Por lo tanto, la probabilidad de obtener cualquier vector no nulo es el complemento:
+            $$
+            P(\text{no nulo}) = 1 - \frac{1}{4} = \frac{3}{4}
+            $$
+
+        \item[b)] \textbf{Calcule la probabilidad de que los vectores obtenidos contengan al menos dos vectores distintos y no nulos.}
+
+            Usaremos un enfoque de combinatoria calculando el evento complemento (obtener como máximo un vector no nulo distinto en las 3 ejecuciones) para evitar sobreconteo.
+            En 3 ejecuciones independientes, el número total de combinaciones posibles es $4^3 = 64$.
+            
+            Los casos del complemento se dividen así:
+            \begin{itemize}
+                \item Obtener el vector nulo en las 3 ejecuciones: $1$ caso ($000, 000, 000$).
+                \item Obtener combinaciones exclusivas entre el vector nulo y un único vector no nulo específico (llamémoslo $v_1$). Las combinaciones posibles en el conjunto $\{000, v_1\}^3$ son $2^3 = 8$. Si descontamos el caso donde todos son nulos, nos quedan $7$ casos válidos para $v_1$.
+                \item Como existen $3$ vectores no nulos distintos en $S$, aplicamos esto para cada uno: $3 \times 7 = 21$ casos.
+            \end{itemize}
+
+            El total de casos del complemento es $1 + 21 = 22$.
+            $$
+            P(\text{complemento}) = \frac{22}{64} = \frac{11}{32}
+            $$
+
+            Finalmente, la probabilidad de éxito (obtener al menos dos vectores no nulos distintos) es:
+            $$
+            P(\text{éxito}) = 1 - \frac{11}{32} = \frac{21}{32}
+            $$
+
+        \item[c)] \textbf{¿Cuál es la probabilidad de que después de tres ejecuciones no se pueda determinar $s$?}
+
+            La condición para no poder determinar $s$ es exactamente el evento complemento que calculamos en el inciso anterior (no contar con la cantidad suficiente de vectores linealmente independientes). Por lo tanto, la probabilidad es directa:
+            $$
+            P(\text{no determinar } s) = \frac{11}{32}
+            $$
+    \end{enumerate}
+\end{quote}
+
+\vspace{.5cm}
+

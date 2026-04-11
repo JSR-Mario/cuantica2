@@ -1,5 +1,5 @@
 # Fdb version 4
-["lualatex"] 1775867356 "Tarea1.tex" "Tarea1.pdf" "Tarea1" 1775867358 0
+["lualatex"] 1775875528 "Tarea1.tex" "Tarea1.pdf" "Tarea1" 1775875530 0
   "/home/jsr-mario/.texlive2022/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.luc" 1771137757 128392 5ccdcd80529671c517f74edd952aa156 ""
   "/home/jsr-mario/.texlive2022/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.luc" 1771137758 136294 09728fc21177978741a7b8266f6c1d72 ""
   "/home/jsr-mario/.texlive2022/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.luc" 1771137756 127309 2c3a7c325c755353a32b5f3d0c56cb88 ""
@@ -255,14 +255,14 @@
   "/var/lib/texmf/tex/generic/config/language.dat" 1755650511 5130 c05662b30c9d1ec0a929e8e3c215d4d2 ""
   "/var/lib/texmf/web2c/luahbtex/lualatex.fmt" 1755650573 11864923 b0b6182838310bd3b460b48ccf3e6c71 ""
   "Portada.tex" 1775863326 808 3c8614eb2c5504e9d3dd0158697ea5fd ""
-  "Tarea1.aux" 1775867358 811 a71ca57ab942c0e05787932c1c251170 "lualatex"
-  "Tarea1.out" 1775867357 0 d41d8cd98f00b204e9800998ecf8427e "lualatex"
+  "Tarea1.aux" 1775875530 811 0694b106bb94e1822af437bc015df6ba "lualatex"
+  "Tarea1.out" 1775875529 0 d41d8cd98f00b204e9800998ecf8427e "lualatex"
   "Tarea1.tex" 1775859064 1353 557fb45c2678bac09e626a2ff123b45d ""
   "contenidos/p1.tex" 1775863293 4311 dab1e78c652117cb9fb2fadb78c3c88c ""
-  "contenidos/p2.tex" 1775867355 3205 647311d709b69168f661b5a68924cf0f ""
-  "contenidos/p3.tex" 1775857331 986 cdf103fef7823f01c598e04fcec01f2a ""
-  "contenidos/p4.tex" 1775857351 1177 438ec8e68cd4df9d2c72f0a1261f8cec ""
-  "contenidos/p5.tex" 1775857367 889 570d54752b74c3b7bfaaffdab86fd7d2 ""
+  "contenidos/p2.tex" 1775867452 3205 647311d709b69168f661b5a68924cf0f ""
+  "contenidos/p3.tex" 1775874349 4659 ef885b5985bdc4e96552532205d8f11c ""
+  "contenidos/p4.tex" 1775875115 3643 1c9facdd5b5aea3ece2fb5c51223a7e1 ""
+  "contenidos/p5.tex" 1775875528 3264 e00b77ab141989158504b86813a40f75 ""
   "resources/images.png" 1775854023 14108 f023b2e50540e0c9676d9a95876d2985 ""
   (generated)
   "Tarea1.aux"

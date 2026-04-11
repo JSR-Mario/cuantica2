@@ -1,8 +1,43 @@
 {\bfseries
+Demostración general de la ortogonalidad en Simon. En el algoritmo de Simon, después de aplicar el oráculo $U_f$ y medir el segundo registro , el estado del primer registro colapsa a una superposición de la forma:
+$$ \ket{\phi} = \frac{1}{\sqrt{2}}(\ket{x_0} + \ket{x_0 \oplus s}) $$
+donde $x_0$ es una de las dos preimágenes del valor medido en el segundo registro. A continuación se aplica la segunda transformada de Hadamard $H^{\otimes n}$ al primer registro. Demuestre que el estado resultante es:
+$$H^{\otimes n} \ket{\phi} = \frac{1}{\sqrt{2^{n-1}}} \sum_{z:z\cdot s=0} (-1)^{z \cdot x_0} \ket{z} $$
+Concluya que cualquier resultado $z$ de la medición final satisface $z \cdot s = 0 \pmod 2$. (Sugerencia: use la expresión $H^{\otimes n} \ket{x} = \frac{1}{\sqrt{2^n}} \sum_z (-1)^{z \cdot x} \ket{z}$.)}
 
-Demostración general de la ortogonalidad en Simon. En el algoritmo de Simon, después de aplicar el oráculo $U_f$ y medir el segundo registro, el estado del primer registro colapsa a una superposición de la forma
-$$ \vert \phi \rangle = \frac{1}{\sqrt{2}}(\vert x_0 \rangle + \vert x_0 \oplus s \rangle), $$
-donde $x_0$ es una de las dos preimágenes del valor medido en el segundo registro. A continuación se aplica la segunda transformada de Hadamard $H^{\otimes n}$ al primer registro. Demuestre que el estado resultante es
-$$ H^{\otimes n} \vert \phi \rangle = \frac{1}{\sqrt{2^{n-1}}} \sum_{z:z\cdot s=0} (-1)^{z \cdot x_0} \vert z \rangle. $$
-Concluya que cualquier resultado $z$ de la medición final satisface $z \cdot s = 0 \pmod 2$. (Sugerencia: use la expresión $H^{\otimes n} \vert x \rangle = \frac{1}{\sqrt{2^n}} \sum_z (-1)^{z \cdot x} \vert z \rangle$.)}
+\vspace{.5cm}
 
+\begin{quote}
+            Partimos del estado colapsado $\ket{\phi}$ y aplicamos la linealidad de la transformada de Hadamard:
+            \begin{align*}
+                H^{\otimes n} \ket{\phi} &= \frac{1}{\sqrt{2}} \left( H^{\otimes n}\ket{x_0} + H^{\otimes n}\ket{x_0 \oplus s} \right)
+            \end{align*}
+
+            Sustituimos cada término usando la sumatoria de la definición de Hadamard:
+            \begin{align*}
+                H^{\otimes n} \ket{\phi} &= \frac{1}{\sqrt{2}} \left( \frac{1}{\sqrt{2^n}} \sum_{z \in \{0,1\}^n} (-1)^{z \cdot x_0} \ket{z} + \frac{1}{\sqrt{2^n}} \sum_{z \in \{0,1\}^n} (-1)^{z \cdot (x_0 \oplus s)} \ket{z} \right) \\
+                &= \frac{1}{\sqrt{2^{n+1}}} \sum_{z \in \{0,1\}^n} \left[ (-1)^{z \cdot x_0} + (-1)^{z \cdot (x_0 \oplus s)} \right] \ket{z}
+            \end{align*}
+
+            Utilizando la propiedad distributiva del producto punto sobre el XOR, $z \cdot (x_0 \oplus s) = (z \cdot x_0) \oplus (z \cdot s)$, factorizamos la fase común:
+            \begin{align*}
+                H^{\otimes n} \ket{\phi} &= \frac{1}{\sqrt{2^{n+1}}} \sum_{z \in \{0,1\}^n} (-1)^{z \cdot x_0} \left[ 1 + (-1)^{z \cdot s} \right] \ket{z}
+            \end{align*}
+
+            Analizamos el término de interferencia $\left[ 1 + (-1)^{z \cdot s} \right]$:
+            \begin{itemize}
+                \item Si $z \cdot s = 1 \pmod 2$, entonces $1 + (-1)^1 = 0$. El estado $\ket{z}$ sufre interferencia destructiva.
+                \item Si $z \cdot s = 0 \pmod 2$, entonces $1 + (-1)^0 = 2$. El estado $\ket{z}$ sobrevive con interferencia constructiva.
+            \end{itemize}
+
+            Al restringir la suma a los valores donde $z \cdot s = 0$, obtenemos:
+            \begin{align*}
+                H^{\otimes n} \ket{\phi} &= \frac{1}{\sqrt{2^{n+1}}} \sum_{z:z\cdot s=0} (-1)^{z \cdot x_0} (2) \ket{z} \\
+                &= \frac{2}{\sqrt{2} \cdot \sqrt{2^n}} \sum_{z:z\cdot s=0} (-1)^{z \cdot x_0} \ket{z} \\
+                &= \frac{1}{\sqrt{2^{n-1}}} \sum_{z:z\cdot s=0} (-1)^{z \cdot x_0} \ket{z}
+            \end{align*}
+
+            La probabilidad de medir un estado $\ket{z}$ es el cuadrado del módulo de su amplitud. Como se demostró que la amplitud es nula para todo $z$ tal que $z \cdot s \neq 0$, cualquier resultado de la medición final satisface necesariamente la condición de ortogonalidad $z \cdot s = 0 \pmod 2$.
+\end{quote}
+
+\vspace{.5cm}

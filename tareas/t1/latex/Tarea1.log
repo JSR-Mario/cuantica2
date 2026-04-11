@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.15.0 (TeX Live 2022/Debian)  (format=lualatex 2025.8.19)  10 APR 2026 18:29
+This is LuaHBTeX, Version 1.15.0 (TeX Live 2022/Debian)  (format=lualatex 2025.8.19)  10 APR 2026 20:45
  system commands enabled.
  file:line:error style messages enabled.
 **Tarea1.tex
@@ -1026,9 +1026,9 @@ Overfull \hbox (56.7794pt too wide) detected at line 47
 []
  []
 
-[2]) (./contenidos/p3.tex) (./contenidos/p4.tex) (./contenidos/p5.tex) 
+[2]) (./contenidos/p3.tex [3]) (./contenidos/p4.tex [4]) (./contenidos/p5.tex [5]) 
 AED: lastpage setting LastPage
-[3] (./Tarea1.aux
+[6] (./Tarea1.aux
 LaTeX Info: Redefining \. on input line 22.
 LaTeX Info: Redefining \% on input line 22.
 )
@@ -1037,19 +1037,19 @@ Package rerunfilecheck Info: File `Tarea1.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 30212 strings out of 478382
+ 30217 strings out of 478382
  125086,1977958 words of node,token memory allocated
- 763 words of node memory still in use:
-   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 35 attribute, 88 glue_spec, 19 attribute_list, 3 write nodes
-   avail lists: 2:1269,3:172,4:53,5:251,6:34,7:6380,8:109,9:1181,10:5,11:718
+ 805 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 49 attribute, 88 glue_spec, 26 attribute_list, 3 write nodes
+   avail lists: 2:1248,3:187,4:53,5:337,6:34,7:5919,8:109,9:1181,10:5,11:708
  49123 multiletter control sequences out of 65536+600000
  41 fonts using 2893487 bytes
- 99i,10n,98p,684b,709s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,11n,98p,684b,812s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/opentype/public/lm/lmroman10-italic.otf></usr/share/texmf/fonts/opentype/public/lm/lmroman10-bold.otf></usr/share/texmf/fonts/opentype/public/lm/lmroman12-bold.otf></usr/share/texmf/fonts/opentype/public/lm/lmroman10-regular.otf></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Tarea1.pdf (4 pages, 130617 bytes).
+Output written on Tarea1.pdf (7 pages, 146369 bytes).
 
-PDF statistics: 110 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
- 17 named destinations out of 1000 (max. 131072)
+PDF statistics: 124 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
+ 22 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 100000000)
 
