@@ -18,3 +18,58 @@ Considere una caminata cuántica continua con Hamiltoniano $H = A$ y estado inic
     \item[d)] {\bfseries ¿Cuál es el período de oscilación del sistema? ¿Existe algún tiempo en el
         que la partícula se localice completamente en un vértice distinto del inicial? }
 \end{enumerate}
+
+\textbf{a) Diagonalización de la matriz $H$:}
+La matriz de adyacencia (y Hamiltoniano) es:
+\begin{equation*}
+H = A = \begin{pmatrix} 0 & 1 & 1 \\ 1 & 0 & 1 \\ 1 & 1 & 0 \end{pmatrix}
+\end{equation*}
+El polinomio característico se obtiene de $\det(H - \lambda I) = -\lambda^3 + 3\lambda + 2 = -(\lambda - 2)(\lambda + 1)^2 = 0$.
+Los autovalores son $\lambda_1 = 2$  y $\lambda_2 = \lambda_3 = -1$ .
+
+Para $\lambda_1 = 2$, el sistema $(H - 2I)\vec{v} = 0$ nos da el primer autovector normalizado:
+\begin{equation*}
+\ket{v_1} = \frac{1}{\sqrt{3}}\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}
+\end{equation*}
+
+Para $\lambda_{2,3} = -1$, el sistema $(H + I)\vec{v} = 0$ equivale a la ecuación $x+y+z=0$. Elegimos dos vectores ortogonales que cumplan esta condición y los normalizamos para completar la base ortonormal:
+\begin{equation*}
+\ket{v_2} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \\ 0 \end{pmatrix}, \quad
+\ket{v_3} = \frac{1}{\sqrt{6}}\begin{pmatrix} 1 \\ 1 \\ -2 \end{pmatrix}
+\end{equation*}
+
+\vspace{0.5cm}
+\textbf{b) Estado inicial y evolución temporal $\ket{\psi(t)}$:}
+El estado inicial es $\ket{\psi(0)} = \ket{0} = (1, 0, 0)^T$. Expresándolo en la base de autovectores calculando los coeficientes $c_i = \braket{v_i}{0}$:
+\begin{equation*}
+\ket{\psi(0)} = \braket{v_1}{0}\ket{v_1} + \braket{v_2}{0}\ket{v_2} + \braket{v_3}{0}\ket{v_3} = \frac{1}{\sqrt{3}}\ket{v_1} + \frac{1}{\sqrt{2}}\ket{v_2} + \frac{1}{\sqrt{6}}\ket{v_3}
+\end{equation*}
+
+La evolución temporal está dada por $\ket{\psi(t)} = e^{-iHt}\ket{\psi(0)} = \sum_j c_j e^{-i\lambda_j t} \ket{v_j}$:
+\begin{equation*}
+\ket{\psi(t)} = \frac{1}{\sqrt{3}}e^{-2it}\ket{v_1} + \frac{1}{\sqrt{2}}e^{it}\ket{v_2} + \frac{1}{\sqrt{6}}e^{it}\ket{v_3}
+\end{equation*}
+
+\vspace{0.5cm}
+\textbf{c) Amplitudes de probabilidad y probabilidades $P_i(t)$:}
+Calculamos $\bra{i}\ket{\psi(t)}$ para cada vértice proyectando el estado:
+\begin{align*}
+\bra{0}\ket{\psi(t)} &= \frac{1}{\sqrt{3}}e^{-2it}\left(\frac{1}{\sqrt{3}}\right) + \frac{1}{\sqrt{2}}e^{it}\left(\frac{1}{\sqrt{2}}\right) + \frac{1}{\sqrt{6}}e^{it}\left(\frac{1}{\sqrt{6}}\right) = \frac{1}{3}e^{-2it} + \frac{2}{3}e^{it} \\
+\bra{1}\ket{\psi(t)} &= \frac{1}{\sqrt{3}}e^{-2it}\left(\frac{1}{\sqrt{3}}\right) + \frac{1}{\sqrt{2}}e^{it}\left(-\frac{1}{\sqrt{2}}\right) + \frac{1}{\sqrt{6}}e^{it}\left(\frac{1}{\sqrt{6}}\right) = \frac{1}{3}e^{-2it} - \frac{1}{3}e^{it} \\
+\bra{2}\ket{\psi(t)} &= \frac{1}{\sqrt{3}}e^{-2it}\left(\frac{1}{\sqrt{3}}\right) + \frac{1}{\sqrt{2}}e^{it}(0) + \frac{1}{\sqrt{6}}e^{it}\left(-\frac{2}{\sqrt{6}}\right) = \frac{1}{3}e^{-2it} - \frac{1}{3}e^{it}
+\end{align*}
+
+Las probabilidades $P_i(t) = |\bra{i}\ket{\psi(t)}|^2$ se obtienen multiplicando la amplitud por su complejo conjugado:
+\begin{align*}
+P_0(t) &= \left(\frac{1}{3}e^{-2it} + \frac{2}{3}e^{it}\right)\left(\frac{1}{3}e^{2it} + \frac{2}{3}e^{-it}\right) = \frac{1}{9}\left(1 + 2e^{-3it} + 2e^{3it} + 4\right) = \frac{1}{9}\left(5 + 4\cos(3t)\right) \\
+P_1(t) &= \left(\frac{1}{3}e^{-2it} - \frac{1}{3}e^{it}\right)\left(\frac{1}{3}e^{2it} - \frac{1}{3}e^{-it}\right) = \frac{1}{9}\left(1 - e^{-3it} - e^{3it} + 1\right) = \frac{1}{9}\left(2 - 2\cos(3t)\right) \\
+P_2(t) &= P_1(t) = \frac{1}{9}\left(2 - 2\cos(3t)\right)
+\end{align*}
+
+\vspace{0.5cm}
+\textbf{d) Período de oscilación y localización:}
+\begin{itemize}
+    \item \textbf{Período:} Las funciones de probabilidad dependen del término armónico $\cos(3t)$. El período de oscilación $T$ se determina imponiendo que $3T = 2\pi$, por lo tanto, el período es $T = \frac{2\pi}{3}$.
+    \item \textbf{Localización:} Para que la partícula se localice completamente en un vértice distinto al inicial, necesitaríamos que $P_1(t) = 1$ o $P_2(t) = 1$ en algún momento $t$. El valor máximo de $P_1(t)$ y $P_2(t)$ ocurre cuando $\cos(3t) = -1$, lo cual da una probabilidad máxima de $P_{max} = \frac{1}{9}(2 - 2(-1)) = \frac{4}{9}$. Como $4/9 < 1$, \textbf{nunca existe un tiempo} en el que la partícula se localice por completo en un vértice distinto del inicial.
+\end{itemize}
+\vspace{0.5cm}
