@@ -9,3 +9,25 @@ QR_{i}=\lim_{T\rightarrow\infty}\frac{1}{T}\int_{0}^{T}P_{i}(t)dt
     \item[b)] {\bfseries Verifique que $\sum_{i}QR_{i}=1$.}
     \item[c)] {\bfseries Interprete el resultado: ¿qué vértice resulta más importante según esta medida?}
 \end{enumerate}
+
+\textbf{a) Cálculo explícito de $QR_0, QR_1, QR_2$:}
+Utilizando la definición $QR_i = \lim_{T \to \infty} \frac{1}{T} \int_0^T P_i(t) dt$ y recordando que el promedio temporal de la función armónica $\cos(\omega t)$ sobre un tiempo infinito es cero $\left(\lim_{T \to \infty} \frac{1}{T} \int_0^T \cos(\omega t) dt = 0\right)$, evaluamos las expresiones calculadas en el ejercicio 2:
+
+\begin{align*}
+QR_0 &= \lim_{T \to \infty} \frac{1}{T} \int_0^T \frac{1}{9}(5 + 4\cos(3t)) dt = \frac{5}{9} \\
+QR_1 &= \lim_{T \to \infty} \frac{1}{T} \int_0^T \frac{1}{9}(2 - 2\cos(3t)) dt = \frac{2}{9} \\
+QR_2 &= \lim_{T \to \infty} \frac{1}{T} \int_0^T \frac{1}{9}(2 - 2\cos(3t)) dt = \frac{2}{9}
+\end{align*}
+
+\vspace{0.5cm}
+\textbf{b) Verificación de la suma:}
+\begin{equation*}
+\sum_{i=0}^2 QR_i = QR_0 + QR_1 + QR_2 = \frac{5}{9} + \frac{2}{9} + \frac{2}{9} = \frac{9}{9} = 1
+\end{equation*}
+
+\vspace{0.5cm}
+\textbf{c) Interpretación de los resultados:}
+Según esta medida, el \textbf{vértice 0} es el más importante, ya que concentra el $55.5\%$ ($\frac{5}{9}$) de la probabilidad temporal promedio. 
+
+A diferencia del comportamiento de una caminata aleatoria clásica (que converge a una distribución
+uniforme y ``olvida'' las condiciones iniciales), la evolución cuántica es unitaria y preserva la memoria del sistema. Como la partícula se localizó inicialmente en $\ket{0}$, la interferencia constructiva asegura que la mayor parte de la amplitud de probabilidad regrese y oscile alrededor del nodo de origen a lo largo del tiempo.
