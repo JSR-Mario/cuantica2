@@ -1,0 +1,80 @@
+{\bfseries Interferencia cuántica en Deutsch-Jozsa generalizado.
+
+Considere una función $f : \{0,1\}^n \to \{0,1\}$ definida como
+
+$$
+    f(x) = a \cdot x \pmod 2,
+$$
+
+donde $a \in \{0,1\}^n$ es un vector fijo no nulo y el producto es el producto interno binario.
+}
+
+{\bfseries (a) Aplique el algoritmo de Deutsch-Jozsa de manera simbólica para un $n$ arbitrario: inicialización, primera transformada de Hadamard, aplicación del oráculo $U_f$, segunda transformada de Hadamard.}
+
+\textbf{Inicialización.} El registro de entrada se prepara en $\ket{0}^{\otimes n}$ y el qubit ancila en $\ket{1}$:
+$$
+    \ket{\psi_0} = \ket{0}^{\otimes n} \ket{1}.
+$$
+
+\textbf{Primera Hadamard.} Aplicamos $H^{\otimes (n+1)}$:
+$$
+    \ket{\psi_1} = \frac{1}{\sqrt{2^n}} \sum_{x \in \{0,1\}^n} \ket{x} \otimes \frac{\ket{0} - \ket{1}}{\sqrt{2}} = \frac{1}{\sqrt{2^n}} \sum_{x} \ket{x} \ket{-}.
+$$
+
+\textbf{Oráculo $U_f$.} Actúa como $U_f \ket{x}\ket{y} = \ket{x}\ket{y \oplus f(x)}$. Sobre el ancila $\ket{-}$ esto produce el \emph{phase kickback}:
+$$
+    \ket{\psi_2} = \frac{1}{\sqrt{2^n}} \sum_{x} (-1)^{f(x)} \ket{x} \ket{-}.
+$$
+Sustituyendo $f(x) = a \cdot x$:
+$$
+    \ket{\psi_2} = \frac{1}{\sqrt{2^n}} \sum_{x} (-1)^{a \cdot x} \ket{x} \ket{-}.
+$$
+
+\textbf{Segunda Hadamard} (solo sobre el primer registro). Usamos $H^{\otimes n}\ket{x} = \frac{1}{\sqrt{2^n}} \sum_{z} (-1)^{x \cdot z} \ket{z}$:
+$$
+    \ket{\psi_3} = \frac{1}{2^n} \sum_{x} \sum_{z} (-1)^{a \cdot x + x \cdot z} \ket{z} \ket{-} = \frac{1}{2^n} \sum_{z} \left(\sum_{x} (-1)^{(a \oplus z) \cdot x}\right) \ket{z} \ket{-}.
+$$
+
+\vspace{0.5cm}
+
+{\bfseries (b) Obtenga una expresión cerrada del estado final del primer registro.}
+
+La suma interior es una suma de caracteres sobre $\{0,1\}^n$:
+$$
+    \sum_{x \in \{0,1\}^n} (-1)^{(a \oplus z) \cdot x} = \begin{cases} 2^n & \text{si } z = a, \\ 0 & \text{si } z \neq a. \end{cases}
+$$
+Esto es consecuencia directa de la ortogonalidad de los caracteres: si $a \oplus z \neq 0$, existe al menos un bit $j$ donde $(a \oplus z)_j = 1$, y los términos se cancelan por pares al variar $x_j$.
+
+Sustituyendo:
+$$
+    \ket{\psi_3} = \frac{1}{2^n} \cdot 2^n \ket{a}\ket{-} = \ket{a}\ket{-}.
+$$
+
+El estado final del primer registro es:
+$$
+    \boxed{\ket{\psi_{\text{final}}} = \ket{a}.}
+$$
+
+\vspace{0.5cm}
+
+{\bfseries (c) Demuestre que el resultado de la medición es determinístico e identifique el estado medido.}
+
+El estado del primer registro antes de la medición es $\ket{a}$, que es un estado de la base computacional. Por lo tanto, al medir en dicha base:
+$$
+    P(z) = |\braket{z}{a}|^2 = \delta_{z,a}.
+$$
+La probabilidad de obtener $z = a$ es exactamente $1$, y la de cualquier otro resultado es $0$. La medición es \textbf{determinística}: siempre se obtiene la cadena $a$.
+
+Esto significa que con una \emph{única} evaluación del oráculo recuperamos los $n$ bits de $a$, mientras que clásicamente se necesitarían al menos $n$ consultas (una por cada bit).
+
+\vspace{0.5cm}
+
+{\bfseries (d) Explique físicamente por qué este algoritmo puede interpretarse como un mecanismo de detección de fase oculta.}
+
+El oráculo no modifica el estado del registro de entrada; su único efecto es multiplicar cada componente $\ket{x}$ por la fase $(-1)^{a \cdot x}$. La información sobre $a$ queda \emph{codificada exclusivamente en las fases relativas} de la superposición, donde es inaccesible a una medición directa en la base computacional.
+
+La segunda transformada de Hadamard actúa como una \emph{transformada de Fourier discreta} sobre $\mathbb{Z}_2^n$: convierte las fases relativas en amplitudes de probabilidad. El patrón de fases $(-1)^{a \cdot x}$ se transforma en un pico constructivo exacto en $\ket{a}$, ya que las $2^n$ contribuciones interfieren constructivamente solo cuando $z = a$ y se cancelan destructivamente para todo $z \neq a$.
+
+El algoritmo funciona así como un \textbf{detector de fase oculta}: la fase $(-1)^{a \cdot x}$ es la ``señal'' escondida por el oráculo, y la interferencia cuántica (vía Hadamard) actúa como el instrumento que la revela, extrayendo $a$ de forma determinista en una sola consulta.
+
+\vspace{1cm}

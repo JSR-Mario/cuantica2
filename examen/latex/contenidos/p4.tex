@@ -1,0 +1,110 @@
+{\bfseries PageRank cuántico y clásico en un grafo estrella.
+
+Sea la matriz de adyacencia
+
+$$
+    A =
+    \begin{pmatrix}
+        0 & 1 & 1 & 1 \\
+        1 & 0 & 0 & 0 \\
+        1 & 0 & 0 & 0 \\
+        1 & 0 & 0 & 0
+    \end{pmatrix}.
+$$
+}
+
+{\bfseries (a) Construya la matriz de transición $M$ normalizando columnas por grado. Para $\alpha=0.85$, construya}
+
+$$
+    P = \alpha M + (1-\alpha)\frac{1}{4}\mathbf{1}\mathbf{1}^T
+$$
+
+{\bfseries y calcule el vector estacionario $\pi$ tal que $P\pi = \pi$ y $\sum_i \pi_i = 1$.}
+
+Los grados son $d_0 = 3$, $d_1 = d_2 = d_3 = 1$. Normalizando cada columna $j$ por $d_j$:
+$$
+    M = \begin{pmatrix}
+        0   & 1 & 1 & 1 \\
+        1/3 & 0 & 0 & 0 \\
+        1/3 & 0 & 0 & 0 \\
+        1/3 & 0 & 0 & 0
+    \end{pmatrix}.
+$$
+
+Con $\alpha = \tfrac{17}{20}$ y $\tfrac{1-\alpha}{4} = \tfrac{3}{80}$:
+$$
+    P = \frac{17}{20}M + \frac{3}{80}\mathbf{1}\mathbf{1}^T = \begin{pmatrix}
+        \tfrac{3}{80}   & \tfrac{71}{80} & \tfrac{71}{80} & \tfrac{71}{80} \\[4pt]
+        \tfrac{77}{240} & \tfrac{3}{80}  & \tfrac{3}{80}  & \tfrac{3}{80}  \\[4pt]
+        \tfrac{77}{240} & \tfrac{3}{80}  & \tfrac{3}{80}  & \tfrac{3}{80}  \\[4pt]
+        \tfrac{77}{240} & \tfrac{3}{80}  & \tfrac{3}{80}  & \tfrac{3}{80}
+    \end{pmatrix}.
+$$
+
+Por la simetría entre nodos 1, 2 y 3, proponemos $\pi = (\pi_0, \pi_1, \pi_1, \pi_1)^T$. De $P\pi = \pi$:
+$$
+    \pi_0 = \frac{3}{80}\pi_0 + 3 \cdot \frac{71}{80}\pi_1 \;\implies\; \frac{77}{80}\pi_0 = \frac{213}{80}\pi_1 \;\implies\; \pi_0 = \frac{213}{77}\pi_1.
+$$
+Con $\pi_0 + 3\pi_1 = 1$:
+$$
+    \frac{213}{77}\pi_1 + 3\pi_1 = \frac{444}{77}\pi_1 = 1 \;\implies\; \pi_1 = \frac{77}{444}, \quad \pi_0 = \frac{213}{444} = \frac{71}{148}.
+$$
+
+$$
+    \boxed{\pi \approx (0.4797,\; 0.1734,\; 0.1734,\; 0.1734)^T.}
+$$
+
+\vspace{0.5cm}
+
+{\bfseries (b) Considere una caminata cuántica continua con $H=A$ y estado inicial $|\psi(0)\rangle = |0\rangle$. Calcule $|\psi(t)\rangle$, las probabilidades $P_i(t)$ y}
+
+$$
+    QR_i = \lim_{T\to\infty} \frac{1}{T} \int_0^T P_i(t)\,dt.
+$$
+
+La evolución es $\ket{\psi(t)} = e^{-iAt}\ket{0}$. Por la simetría del grafo estrella, $\ket{0}$ solo tiene componente en el subespacio generado por $\ket{0}$ y $\ket{s} = \frac{1}{\sqrt{3}}(\ket{1}+\ket{2}+\ket{3})$.
+
+En la base $\{\ket{0}, \ket{s}\}$, la restricción de $A$ es:
+$$
+    A_{\text{eff}} = \begin{pmatrix} 0 & \sqrt{3} \\ \sqrt{3} & 0 \end{pmatrix}, \quad \text{con autovalores } \lambda_\pm = \pm\sqrt{3}.
+$$
+
+Los autovectores son $\ket{\pm} = \frac{1}{\sqrt{2}}(\ket{0} \pm \ket{s})$, y como $\ket{0} = \frac{1}{\sqrt{2}}(\ket{+}+\ket{-})$:
+$$
+    \ket{\psi(t)} = \frac{1}{2}\left[(e^{-i\sqrt{3}t}+e^{i\sqrt{3}t})\ket{0} + (e^{-i\sqrt{3}t}-e^{i\sqrt{3}t})\ket{s}\right] = \cos(\sqrt{3}\,t)\ket{0} - i\sin(\sqrt{3}\,t)\ket{s}.
+$$
+
+Expandiendo $\ket{s}$:
+$$
+    \ket{\psi(t)} = \cos(\sqrt{3}\,t)\ket{0} - \frac{i\sin(\sqrt{3}\,t)}{\sqrt{3}}\big(\ket{1}+\ket{2}+\ket{3}\big).
+$$
+
+Probabilidades:
+$$
+    P_0(t) = \cos^2(\sqrt{3}\,t), \qquad P_1(t) = P_2(t) = P_3(t) = \frac{\sin^2(\sqrt{3}\,t)}{3}.
+$$
+
+Para el PageRank cuántico, usamos $\langle \cos^2(\omega t)\rangle_T = \langle \sin^2(\omega t)\rangle_T = \tfrac{1}{2}$:
+$$
+    QR_0 = \frac{1}{2}, \qquad QR_1 = QR_2 = QR_3 = \frac{1}{6}.
+$$
+
+$$
+    \boxed{QR = \left(\frac{1}{2},\; \frac{1}{6},\; \frac{1}{6},\; \frac{1}{6}\right).}
+$$
+
+\vspace{0.5cm}
+
+{\bfseries (c) Compare $\pi$ con $(QR_0, QR_1, QR_2, QR_3)$. ¿Qué método da mayor importancia al nodo central? ¿Hay diferencias en las hojas?}
+
+\begin{center}
+    \begin{tabular}{c|c|c}
+        Nodo            & Clásico $\pi_i$         & Cuántico $QR_i$      \\ \hline
+        0 (centro)      & $71/148 \approx 0.4797$ & $1/2 = 0.5$          \\
+        1, 2, 3 (hojas) & $77/444 \approx 0.1734$ & $1/6 \approx 0.1667$
+    \end{tabular}
+\end{center}
+
+El \textbf{método cuántico da mayor importancia al nodo central} ($QR_0 = 0.5$ frente a $\pi_0 \approx 0.48$). Las hojas reciben ligeramente \emph{menos} peso en el caso cuántico ($1/6$ vs $\approx 0.17$).
+
+Ambos métodos respetan la simetría del grafo: las tres hojas son equivalentes. La diferencia se explica porque en la caminata cuántica la oscilación unitaria entre $\ket{0}$ y $\ket{s}$ produce un promedio temporal exacto de $1/2$ para el centro, mientras que el PageRank clásico con teletransportación ($\alpha = 0.85$) redistribuye parte del peso uniformemente, diluyendo ligeramente la centralidad del hub. En el límite $\alpha \to 1$, el PageRank clásico converge a $\pi_0 = 1/2$ y $\pi_i = 1/6$ (proporcional al grado), coincidiendo exactamente con el cuántico.

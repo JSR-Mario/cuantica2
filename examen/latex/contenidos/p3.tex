@@ -1,0 +1,114 @@
+{\bfseries Caminata cuántica discreta con moneda paramétrica.
+
+En una línea infinita de enteros, se define el operador
+
+$$
+    S = \sum_{x \in \mathbb{Z}} \left(
+    |x+1\rangle \langle x| \otimes |0\rangle \langle 0|
+    +
+    |x-1\rangle \langle x| \otimes |1\rangle \langle 1|
+    \right)
+$$
+
+y la moneda
+
+$$
+    C(\theta)=
+    \begin{pmatrix}
+        \cos\theta & \sin\theta  \\
+        \sin\theta & -\cos\theta
+    \end{pmatrix}.
+$$
+
+Estado inicial $|\psi(0)\rangle = |0\rangle_p \otimes |0\rangle_c$.}
+
+{\bfseries (a) Para $\theta = \pi/4$, calcule $|\psi(1)\rangle$, $|\psi(2)\rangle$ y $|\psi(3)\rangle$ (amplitudes y probabilidades).}
+
+En cada paso se aplica $U = S(I_p \otimes C(\theta))$: primero la moneda, luego el shift condicional. Para $\theta = \pi/4$: $\cos\theta = \sin\theta = \tfrac{1}{\sqrt{2}}$.
+
+$$
+    C(\pi/4)\ket{0}_c = \tfrac{1}{\sqrt{2}}\ket{0} + \tfrac{1}{\sqrt{2}}\ket{1}, \qquad C(\pi/4)\ket{1}_c = \tfrac{1}{\sqrt{2}}\ket{0} - \tfrac{1}{\sqrt{2}}\ket{1}.
+$$
+
+\textbf{Paso 1.} Moneda sobre $\ket{0}_p\ket{0}_c$ y shift:
+$$
+    \ket{\psi(1)} = \tfrac{1}{\sqrt{2}}\ket{1}\ket{0} + \tfrac{1}{\sqrt{2}}\ket{-1}\ket{1}.
+$$
+Probabilidades: $P(1) = \tfrac{1}{2}$, $P(-1) = \tfrac{1}{2}$.
+
+\textbf{Paso 2.} Aplicamos moneda a cada componente y shift:
+$$
+    \ket{\psi(2)} = \tfrac{1}{2}\ket{2}\ket{0} + \tfrac{1}{2}\ket{0}\ket{0} + \tfrac{1}{2}\ket{0}\ket{1} - \tfrac{1}{2}\ket{-2}\ket{1}.
+$$
+Probabilidades por posición: $P(2) = \tfrac{1}{4}$, $P(0) = \tfrac{1}{4}+\tfrac{1}{4} = \tfrac{1}{2}$, $P(-2) = \tfrac{1}{4}$.
+
+\textbf{Paso 3.} En $x=0$ las amplitudes de $\ket{0}_c$ se suman constructivamente mientras las de $\ket{1}_c$ se cancelan:
+$$
+    \tfrac{1}{2}\ket{0}\ket{0}+\tfrac{1}{2}\ket{0}\ket{1} \xrightarrow{C} \tfrac{1}{\sqrt{2}}\ket{0}\ket{0}.
+$$
+Tras moneda y shift:
+$$
+    \ket{\psi(3)} = \tfrac{1}{2\sqrt{2}}\ket{3}\ket{0} + \tfrac{1}{\sqrt{2}}\ket{1}\ket{0} + \tfrac{1}{2\sqrt{2}}\ket{1}\ket{1} - \tfrac{1}{2\sqrt{2}}\ket{-1}\ket{0} + \tfrac{1}{2\sqrt{2}}\ket{-3}\ket{1}.
+$$
+Probabilidades:
+$$
+    P(3)=\tfrac{1}{8}, \quad P(1)=\tfrac{1}{2}+\tfrac{1}{8}=\tfrac{5}{8}, \quad P(-1)=\tfrac{1}{8}, \quad P(-3)=\tfrac{1}{8}.
+$$
+Verificación: $\tfrac{1}{8}+\tfrac{5}{8}+\tfrac{1}{8}+\tfrac{1}{8}=1$.
+
+Se observa un claro \textbf{sesgo hacia la derecha}: la probabilidad se concentra en $x=1$.
+
+\vspace{0.5cm}
+
+{\bfseries (b) Para $\theta = \pi/6$, repita el cálculo de los tres primeros pasos.}
+
+Para $\theta = \pi/6$: $\cos\theta = \tfrac{\sqrt{3}}{2}$, $\sin\theta = \tfrac{1}{2}$.
+
+$$
+    C(\pi/6)\ket{0}_c = \tfrac{\sqrt{3}}{2}\ket{0} + \tfrac{1}{2}\ket{1}, \qquad C(\pi/6)\ket{1}_c = \tfrac{1}{2}\ket{0} - \tfrac{\sqrt{3}}{2}\ket{1}.
+$$
+
+\textbf{Paso 1.} Moneda sobre $\ket{0}_p\ket{0}_c$ y shift:
+$$
+    \ket{\psi(1)} = \tfrac{\sqrt{3}}{2}\ket{1}\ket{0} + \tfrac{1}{2}\ket{-1}\ket{1}.
+$$
+Probabilidades: $P(1) = \tfrac{3}{4}$, $P(-1) = \tfrac{1}{4}$.
+
+\textbf{Paso 2.} Moneda y shift:
+$$
+    \ket{\psi(2)} = \tfrac{3}{4}\ket{2}\ket{0} + \tfrac{1}{4}\ket{0}\ket{0} + \tfrac{\sqrt{3}}{4}\ket{0}\ket{1} - \tfrac{\sqrt{3}}{4}\ket{-2}\ket{1}.
+$$
+Probabilidades: $P(2) = \tfrac{9}{16}$, $P(0) = \tfrac{1}{16}+\tfrac{3}{16} = \tfrac{1}{4}$, $P(-2) = \tfrac{3}{16}$.
+
+\textbf{Paso 3.} En $x=0$, las amplitudes de coin se combinan: $\ket{0}_c$ con coeficiente $\tfrac{\sqrt{3}}{4}$, $\ket{1}_c$ con $-\tfrac{1}{4}$. Tras moneda y shift:
+$$
+    \ket{\psi(3)} = \tfrac{3\sqrt{3}}{8}\ket{3}\ket{0} + \tfrac{\sqrt{3}}{4}\ket{1}\ket{0} + \tfrac{3}{8}\ket{1}\ket{1} - \tfrac{\sqrt{3}}{8}\ket{-1}\ket{0} - \tfrac{1}{4}\ket{-1}\ket{1} + \tfrac{3}{8}\ket{-3}\ket{1}.
+$$
+Probabilidades:
+$$
+    P(3)=\tfrac{27}{64}, \quad P(1)=\tfrac{3}{16}+\tfrac{9}{64}=\tfrac{21}{64}, \quad P(-1)=\tfrac{3}{64}+\tfrac{4}{64}=\tfrac{7}{64}, \quad P(-3)=\tfrac{9}{64}.
+$$
+Verificación: $\tfrac{27+21+7+9}{64} = \tfrac{64}{64} = 1$.
+
+El sesgo hacia la derecha es aún más pronunciado: $P(x>0) = \tfrac{48}{64} = \tfrac{3}{4}$.
+
+\vspace{0.5cm}
+
+{\bfseries (c) Compare las distribuciones. ¿Cómo afecta $\theta$ a la propagación? ¿Cuál produce una caminata más rápida?}
+
+La asimetría se origina en la moneda $C(\theta)$: el estado inicial $\ket{0}_c$ se descompone con amplitud $\cos\theta$ hacia $\ket{0}_c$ (que shifta a la derecha) y $\sin\theta$ hacia $\ket{1}_c$ (que shifta a la izquierda). Cuando $\theta < \pi/4$, se tiene $\cos\theta > \sin\theta$ y la caminata favorece la dirección positiva.
+
+\textbf{Comparación a $t=3$:}
+\begin{center}
+    \begin{tabular}{c|c|c}
+                            & $\theta = \pi/4$      & $\theta = \pi/6$              \\ \hline
+        $P(x>0)$            & $\tfrac{6}{8} = 75\%$ & $\tfrac{48}{64} = 75\%$       \\
+        $P(x_{\max})$       & $P(1) = \tfrac{5}{8}$ & $P(3) = \tfrac{27}{64}$       \\
+        $\langle x \rangle$ & $\tfrac{1}{2} = 0.5$  & $\tfrac{17}{16} \approx 1.06$ \\
+        Alcance máximo      & $\pm 3$               & $\pm 3$
+    \end{tabular}
+\end{center}
+
+\textbf{Caminata más rápida:} $\theta = \pi/6$. Con $\theta$ menor, $\cos\theta$ es mayor y la amplitud a la derecha domina más. La distribución se extiende más lejos de $x=0$ y el valor esperado se desplaza más. Esto se traduce en una velocidad de propagación mayor, ya que la probabilidad se distribuye hacia los extremos positivos en vez de concentrarse cerca del origen.
+
+\vspace{1cm}
