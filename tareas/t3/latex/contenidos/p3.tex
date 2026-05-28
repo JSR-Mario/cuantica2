@@ -1,0 +1,28 @@
+{\bfseries RSA: cifrado y descifrado. Se eligen dos primos pequeños $p = 7$ y $q = 13$.}
+
+\begin{enumerate}[a)]
+	\item {\bfseries Calcule $n = p \cdot q$ y $\varphi(n) = (p-1)(q-1)$.}
+
+	\vspace{3cm}
+
+	\item {\bfseries Elija un exponente público $e$ tal que $1 < e < \varphi(n)$ y $\gcd(e, \varphi(n)) = 1$. Tome $e = 5$. Justifique que es válido.}
+
+	\vspace{3cm}
+
+	\item {\bfseries Calcule el exponente privado $d = e^{-1} \bmod \varphi(n)$ usando el algoritmo extendido de Euclides (muestre los pasos).}
+
+	\vspace{5cm}
+
+	\item {\bfseries El mensaje a cifrar es $M = 20$. Calcule el criptograma $C = M^e \bmod n$ (use exponenciación modular rápida, mostrando las potencias necesarias).}
+
+	\vspace{5cm}
+
+	\item {\bfseries Descifre $C$ calculando $C^d \bmod n$ y verifique que obtiene $M = 20$.}
+
+	\vspace{5cm}
+
+	\item {\bfseries ¿Cuál es la clave pública y cuál la privada?}
+
+	\vspace{3cm}
+
+\end{enumerate}

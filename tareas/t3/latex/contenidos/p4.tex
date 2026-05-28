@@ -1,0 +1,24 @@
+{\bfseries Estimación de fase cuántica (QPE) paso a paso. Considere un operador unitario $U$ que actúa sobre un qubit tal que $U\ket{1} = e^{-2\pi i\phi}\ket{1}$ con $\phi = 0.375$. Tiene disponible el autovector $\ket{1}$ y quiere estimar $\phi$ usando el algoritmo QPE con $t = 3$ qubits de fase.}
+
+\begin{enumerate}[a)]
+	\item {\bfseries Inicialización: Escriba el estado inicial de los 3 qubits de fase (todos en $\ket{0}$) junto con el qubit de estado $\ket{1}$.}
+
+	\vspace{3cm}
+
+	\item {\bfseries Superposición: Aplique compuertas de Hadamard a los 3 qubits de fase. Escriba el estado resultante.}
+
+	\vspace{4cm}
+
+	\item {\bfseries Operaciones controladas: Aplique las operaciones $U^{2^j}$ controladas por cada qubit de fase, con $j = 0, 1, 2$ (el qubit menos significativo controla $U^1$, el siguiente $U^2$, el más significativo $U^4$). Muestre que el estado del registro de fase se convierte en $\frac{1}{\sqrt{8}}\sum_{k=0}^{7} e^{-2\pi i\phi k}\ket{k}$.}
+
+	\vspace{6cm}
+
+	\item {\bfseries QFT inversa: Aplique la transformada de Fourier cuántica inversa al registro de fase. Use la matriz $\text{QFT}^{\dagger}$ para $t = 3$ (puede usar la fórmula general o escribirla explícitamente). Indique cuál es el estado final antes de la medición.}
+
+	\vspace{6cm}
+
+	\item {\bfseries Medición: Explique por qué, al medir los tres qubits de fase, el resultado más probable será el entero $m = \lfloor 8\phi \rfloor = 3$ (o el entero más cercano). ¿Cuál es la probabilidad de obtener exactamente $m = 3$? (Use la fórmula aproximada $4/\pi^2$ o la expresión exacta para este caso, sabiendo que $8\phi = 3$ exactamente.)}
+
+	\vspace{5cm}
+
+\end{enumerate}
