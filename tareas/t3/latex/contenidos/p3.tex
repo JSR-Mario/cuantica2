@@ -3,26 +3,112 @@
 \begin{enumerate}[a)]
 	\item {\bfseries Calcule $n = p \cdot q$ y $\varphi(n) = (p-1)(q-1)$.}
 
-	\vspace{3cm}
+	      \[
+		      n = p \cdot q = 7 \times 13 = 91.
+	      \]
+	      \[
+		      \varphi(n) = (p-1)(q-1) = 6 \times 12 = 72.
+	      \]
 
 	\item {\bfseries Elija un exponente público $e$ tal que $1 < e < \varphi(n)$ y $\gcd(e, \varphi(n)) = 1$. Tome $e = 5$. Justifique que es válido.}
 
-	\vspace{3cm}
+	      Se requiere que $\gcd(e, \varphi(n)) = 1$. Verificamos usando el algoritmo de Euclides:
+	      \[
+		      \gcd(5, 72): \quad 72 = 14 \cdot 5 + 2, \quad 5 = 2 \cdot 2 + 1, \quad 2 = 2 \cdot 1 + 0.
+	      \]
+	      Como $\gcd(5, 72) = 1$, el exponente $e = 5$ es coprimo con $\varphi(n) = 72$ y cumple $1 < 5 < 72$. Por lo tanto, es una elección válida.
+
+	      \vspace{3mm}
 
 	\item {\bfseries Calcule el exponente privado $d = e^{-1} \bmod \varphi(n)$ usando el algoritmo extendido de Euclides (muestre los pasos).}
 
-	\vspace{5cm}
+	      Buscamos $d$ tal que $5d \equiv 1 \pmod{72}$. Aplicamos el algoritmo extendido de Euclides para expresar $\gcd(5, 72) = 1$ como combinación lineal:
+
+	      \textbf{Paso 1:}
+	      \begin{align*}
+		      72 & = 14 \cdot 5 + 2, \\
+		      5  & = 2 \cdot 2 + 1,  \\
+		      2  & = 2 \cdot 1 + 0.
+	      \end{align*}
+
+	      \textbf{Paso 2:}
+	      \begin{align*}
+		      1 & = 5 - 2 \cdot 2                 \\
+		        & = 5 - 2 \cdot (72 - 14 \cdot 5) \\
+		        & = 5 - 2 \cdot 72 + 28 \cdot 5   \\
+		        & = 29 \cdot 5 - 2 \cdot 72.
+	      \end{align*}
+
+	      Por lo tanto $29 \cdot 5 \equiv 1 \pmod{72}$, y el exponente privado es:
+	      \[
+		      \boxed{d = 29.}
+	      \]
+
+	      Verificación: $5 \times 29 = 145 = 2 \times 72 + 1 \equiv 1 \pmod{72}$.
+
+	      \vspace{3mm}
 
 	\item {\bfseries El mensaje a cifrar es $M = 20$. Calcule el criptograma $C = M^e \bmod n$ (use exponenciación modular rápida, mostrando las potencias necesarias).}
 
-	\vspace{5cm}
+	      Calculamos $C = 20^5 \bmod 91$ mediante exponenciación por cuadrados repetidos. Descomponemos el exponente en binario: $5 = 101_2 = 4 + 1$.
+
+	      \textbf{Cuadrados sucesivos:}
+	      \begin{align*}
+		      20^1 & \equiv 20 \pmod{91},                                   \\
+		      20^2 & = 400 = 4 \times 91 + 36 \equiv 36 \pmod{91},          \\
+		      20^4 & = 36^2 = 1296 = 14 \times 91 + 22 \equiv 22 \pmod{91}.
+	      \end{align*}
+
+	      \textbf{Combinación:}
+	      \[
+		      20^5 = 20^4 \cdot 20^1 \equiv 22 \times 20 = 440 = 4 \times 91 + 76 \equiv 76 \pmod{91}.
+	      \]
+
+	      \[
+		      \boxed{C = 76.}
+	      \]
 
 	\item {\bfseries Descifre $C$ calculando $C^d \bmod n$ y verifique que obtiene $M = 20$.}
 
-	\vspace{5cm}
+	      Calculamos $76^{29} \bmod 91$. Descomponemos el exponente: $29 = 11101_2 = 16 + 8 + 4 + 1$.
+
+	      \textbf{Cuadrados sucesivos:}
+	      \begin{align*}
+		      76^1    & \equiv 76 \pmod{91},                                   \\
+		      76^2    & = 5776 = 63 \times 91 + 43 \equiv 43 \pmod{91},        \\
+		      76^4    & = 43^2 = 1849 = 20 \times 91 + 29 \equiv 29 \pmod{91}, \\
+		      76^8    & = 29^2 = 841 = 9 \times 91 + 22 \equiv 22 \pmod{91},   \\
+		      76^{16} & = 22^2 = 484 = 5 \times 91 + 29 \equiv 29 \pmod{91}.
+	      \end{align*}
+
+	      \textbf{Combinación ($29 = 16 + 8 + 4 + 1$):}
+	      \begin{align*}
+		      76^{29} & = 76^{16} \cdot 76^{8} \cdot 76^{4} \cdot 76^{1} \\
+		              & \equiv 29 \cdot 22 \cdot 29 \cdot 76 \pmod{91}.
+	      \end{align*}
+
+	      Reduciendo:
+	      \begin{align*}
+		      29 \times 22 & = 638 = 7 \times 91 + 1 \equiv 1 \pmod{91},     \\
+		      1 \times 29  & = 29 \pmod{91},                                 \\
+		      29 \times 76 & = 2204 = 24 \times 91 + 20 \equiv 20 \pmod{91}.
+	      \end{align*}
+
+	      \[
+		      \boxed{76^{29} \bmod 91 = 20 = M. \quad \checkmark}
+	      \]
+
+	      El descifrado recupera el mensaje original $M = 20$, como garantiza el teorema de Euler: $M^{ed} \equiv M \pmod{n}$ cuando $ed \equiv 1 \pmod{\varphi(n)}$.
 
 	\item {\bfseries ¿Cuál es la clave pública y cuál la privada?}
 
-	\vspace{3cm}
+	      \begin{itemize}
+		      \item \textbf{Clave pública:} $(n, e) = (91, 5)$. Se comparte abiertamente y se usa para cifrar.
+		      \item \textbf{Clave privada:} $(n, d) = (91, 29)$. Se mantiene en secreto y se usa para descifrar.
+	      \end{itemize}
+
+	      Los valores $p = 7$ y $q = 13$ también deben mantenerse secretos, pues su conocimiento permite recalcular $\varphi(n) = 72$ y, con ello, obtener $d$ a partir de $e$.
 
 \end{enumerate}
+
+\vspace{1cm }

@@ -3,22 +3,124 @@
 \begin{enumerate}[a)]
 	\item {\bfseries Inicialización: Escriba el estado inicial de los 3 qubits de fase (todos en $\ket{0}$) junto con el qubit de estado $\ket{1}$.}
 
-	\vspace{3cm}
+	      El registro completo consta de $t = 3$ qubits de fase, inicializados en $\ket{0}$, y un qubit auxiliar preparado en el autovector $\ket{1}$:
+	      \[
+		      \boxed{\ket{\psi_0} = \ket{0}_2\ket{0}_1\ket{0}_0 \otimes \ket{1} = \ket{000}\ket{1}.}
+	      \]
+
+	      \vspace{3mm}
 
 	\item {\bfseries Superposición: Aplique compuertas de Hadamard a los 3 qubits de fase. Escriba el estado resultante.}
 
-	\vspace{4cm}
+	      $H^{\otimes 3}$ a los tres qubits de fase:
+	      \[
+		      H\ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1}),
+	      \]
+	      de modo que
+	      \begin{align*}
+		      \ket{\psi_1} & = \left(H^{\otimes 3}\ket{000}\right)\ket{1}                                                                                                  \\
+		                   & = \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \otimes \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \otimes \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \otimes \ket{1} \\
+		                   & = \frac{1}{\sqrt{8}} \sum_{k=0}^{7} \ket{k} \otimes \ket{1}.
+	      \end{align*}
 
-	\item {\bfseries Operaciones controladas: Aplique las operaciones $U^{2^j}$ controladas por cada qubit de fase, con $j = 0, 1, 2$ (el qubit menos significativo controla $U^1$, el siguiente $U^2$, el más significativo $U^4$). Muestre que el estado del registro de fase se convierte en $\frac{1}{\sqrt{8}}\sum_{k=0}^{7} e^{-2\pi i\phi k}\ket{k}$.}
+	      \[
+		      \boxed{\ket{\psi_1} = \frac{1}{2\sqrt{2}} \sum_{k=0}^{7} \ket{k} \otimes \ket{1}.}
+	      \]
 
-	\vspace{6cm}
+	      \vspace{3mm}
+
+	\item {\bfseries Operaciones controladas: Aplique las operaciones $U^{2^j}$ controladas por cada qubit de fase, con $j = 0, 1, 2$. Muestre que el estado del registro de fase se convierte en $\frac{1}{\sqrt{8}}\sum_{k=0}^{7} e^{-2\pi i\phi k}\ket{k}$.}
+
+	      Dado que $\ket{1}$ es autovector de $U$ con eigenvalor $e^{-2\pi i\phi}$, se tiene:
+	      \[
+		      U^{2^j}\ket{1} = e^{-2\pi i \cdot 2^j \phi}\ket{1}.
+	      \]
+
+	      La operación controlada $U^{2^j}$ con el qubit de fase $j$ como control actúa como:
+	      \[
+		      c\text{-}U^{2^j}: \quad \ket{0}_j\ket{1} \to \ket{0}_j\ket{1}, \qquad \ket{1}_j\ket{1} \to e^{-2\pi i \cdot 2^j \phi}\ket{1}_j\ket{1}.
+	      \]
+
+	      Es decir, phase kickback sobre el qubit de fase. Analicemos la acción sobre cada qubit de fase individualmente.
+
+	      \textbf{Qubit $j=0$ (menos significativo), controla $U^1$:}
+	      \[
+		      \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\ket{1} \xrightarrow{c\text{-}U^1} \frac{1}{\sqrt{2}}(\ket{0} + e^{-2\pi i\phi}\ket{1})\ket{1}.
+	      \]
+
+	      \textbf{Qubit $j=1$, controla $U^2$:}
+	      \[
+		      \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\ket{1} \xrightarrow{c\text{-}U^2} \frac{1}{\sqrt{2}}(\ket{0} + e^{-2\pi i \cdot 2\phi}\ket{1})\ket{1}.
+	      \]
+
+	      \textbf{Qubit $j=2$ (más significativo), controla $U^4$:}
+	      \[
+		      \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})\ket{1} \xrightarrow{c\text{-}U^4} \frac{1}{\sqrt{2}}(\ket{0} + e^{-2\pi i \cdot 4\phi}\ket{1})\ket{1}.
+	      \]
+
+	      El estado conjunto del registro de fase es entonces:
+	      \begin{align*}
+		      \ket{\psi_2} & = \frac{1}{\sqrt{8}} \left(\ket{0} + e^{-2\pi i \cdot 4\phi}\ket{1}\right) \otimes \left(\ket{0} + e^{-2\pi i \cdot 2\phi}\ket{1}\right) \otimes \left(\ket{0} + e^{-2\pi i\phi}\ket{1}\right) \otimes \ket{1}.
+	      \end{align*}
+
+	      Al expandir este producto, cada qubit $j$ aporta $\ket{k_j}$ (con $k_j = 0$ o $1$), y solo cuando $k_j = 1$ se acumula la fase $e^{-2\pi i \cdot 2^j\phi}$. Como $k = 4k_2 + 2k_1 + k_0$ es simplemente la representación binaria del entero $k$, el producto de las tres fases da $e^{-2\pi i\phi k}$:
+
+	      \[
+		      \boxed{\ket{\psi_2} = \frac{1}{\sqrt{8}} \sum_{k=0}^{7} e^{-2\pi i\phi k}\ket{k} \otimes \ket{1}.}
+	      \]
+
 
 	\item {\bfseries QFT inversa: Aplique la transformada de Fourier cuántica inversa al registro de fase. Use la matriz $\text{QFT}^{\dagger}$ para $t = 3$ (puede usar la fórmula general o escribirla explícitamente). Indique cuál es el estado final antes de la medición.}
 
-	\vspace{6cm}
+	      La QFT para $N = 2^t = 8$ tiene elementos:
+	      \[
+		      (\text{QFT}_8)_{jk} = \frac{1}{\sqrt{8}} \, \omega_8^{jk}, \quad \omega_8 = e^{2\pi i/8}.
+	      \]
+
+	      Su inversa es:
+	      \[
+		      (\text{QFT}_8^{\dagger})_{jk} = \frac{1}{\sqrt{8}} \, \omega_8^{-jk} = \frac{1}{\sqrt{8}} \, e^{-2\pi i \, jk/8}.
+	      \]
+
+	      La $\text{QFT}^{\dagger}$ actúa sobre un estado del tipo $\frac{1}{\sqrt{N}}\sum_{k} e^{-2\pi i mk/N}\ket{k}$ como:
+	      \[
+		      \text{QFT}^{\dagger}\left(\frac{1}{\sqrt{N}}\sum_{k=0}^{N-1} e^{-2\pi i mk/N}\ket{k}\right) = \ket{m},
+	      \]
+
+	      En nuestro caso, $\phi = 3/8$, de modo que:
+	      \[
+		      e^{-2\pi i\phi k} = e^{-2\pi i (3/8) k} = e^{-2\pi i \cdot 3k / 8}.
+	      \]
+
+	      Esto tiene \emph{exactamente} la forma $e^{-2\pi i mk/N}$ con $m = 3$ y $N = 8$. Entonces:
+	      \[
+		      \text{QFT}^{\dagger} \left(\frac{1}{\sqrt{8}} \sum_{k=0}^{7} e^{-2\pi i \cdot 3k/8}\ket{k}\right) = \ket{3} = \ket{011}.
+	      \]
+
+	      El estado final antes de la medición es:
+	      \[
+		      \boxed{\ket{\psi_3} = \ket{011}\ket{1} = \ket{0}\ket{1}\ket{1}\otimes\ket{1}.}
+	      \]
+
+	      \vspace{3mm}
 
 	\item {\bfseries Medición: Explique por qué, al medir los tres qubits de fase, el resultado más probable será el entero $m = \lfloor 8\phi \rfloor = 3$ (o el entero más cercano). ¿Cuál es la probabilidad de obtener exactamente $m = 3$? (Use la fórmula aproximada $4/\pi^2$ o la expresión exacta para este caso, sabiendo que $8\phi = 3$ exactamente.)}
 
-	\vspace{5cm}
+	      En el inciso anterior vimos que, tras aplicar la QFT$^\dagger$, el estado del registro de fase es exactamente $\ket{011} = \ket{3}$. Esto ya nos dice que al medir obtendremos $m = 3$ con probabilidad 1, pero veamos por qué.
+
+	      El punto clave es que $N\phi = 8 \times 3/8 = 3$ es un entero exacto, lo que significa que $\phi$ se puede representar de forma exacta con $t = 3$ bits: $\phi = 0.011_2$. En este caso la QFT$^\dagger$ invierte perfectamente la codificación de fase y no hay ``derrame'' entre frecuencias.
+
+	      Formalmente, la amplitud de medir $m$ es proporcional a $\sum_{k=0}^{7} e^{-2\pi i(\phi - m/N)k}$. Para $m = 3$ tenemos $\phi - m/N = 0$, así que todos los términos de la suma valen 1 y la amplitud es máxima. Para cualquier $m \neq 3$, la diferencia $\phi - m/N \neq 0$ y la suma se anula por ortogonalidad de las raíces de la unidad. Entonces:
+	      \[
+		      \boxed{P(m = 3) = 1, \qquad P(m \neq 3) = 0.}
+	      \]
+
+	      En el caso general donde $N\phi$ no es un entero exacto, la probabilidad de medir $m$ se obtiene evaluando la suma geométrica, que da:
+	      \[
+		      P(m) = \frac{1}{N^2} \cdot \frac{\sin^2(N\pi(\phi - m/N))}{\sin^2(\pi(\phi - m/N))}.
+	      \]
+	      Esta expresión es tipo $\text{sinc}^2$: tiene un pico en el valor de $m$ más cercano a $N\phi$ y decae rápidamente para los demás. Se puede acotar la probabilidad del bin más cercano por abajo como $P(m^*) \geq 4/\pi^2 \approx 0.405$.
+
+	      En nuestro caso $N\phi = 3$ es exacto, así que recuperamos la fase como $\phi = m/2^t = 3/8 = 0.375$.
 
 \end{enumerate}

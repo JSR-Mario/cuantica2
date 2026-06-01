@@ -1,21 +1,121 @@
-{\bfseries Transformada de Fourier clásica (DFT). Dada la señal discreta de longitud $N = 4$:
+`{\bfseries Transformada de Fourier clásica (DFT). Dada la señal discreta de longitud $N = 4$:
 $\mathbf{x} = [x_0, x_1, x_2, x_3] = [1, 2, 0, -1]$.}
 
 \begin{enumerate}[a)]
 	\item {\bfseries Escriba la matriz de la DFT para $N = 4$ con $\omega_4 = e^{-2\pi i/4} = -i$.}
 
-	\vspace{4cm}
+	      La matriz de la DFT de tamaño $N$ tiene entradas $F_{jk} = \omega_N^{jk}$ para $j, k = 0, 1, \ldots, N-1$. Con $\omega_4 = -i$ calculamos las potencias necesarias:
+	      \[
+		      \omega_4^0 = 1, \quad \omega_4^1 = -i, \quad \omega_4^2 = (-i)^2 = -1, \quad \omega_4^3 = (-i)^3 = i.
+	      \]
+	      Por periodicidad $\omega_4^{k+4} = \omega_4^k$. Entonces la matriz $F_4$ es:
+	      \[
+		      F_4 = \begin{pmatrix}
+			      \omega^0 & \omega^0 & \omega^0 & \omega^0 \\
+			      \omega^0 & \omega^1 & \omega^2 & \omega^3 \\
+			      \omega^0 & \omega^2 & \omega^4 & \omega^6 \\
+			      \omega^0 & \omega^3 & \omega^6 & \omega^9
+		      \end{pmatrix}
+		      =
+		      \begin{pmatrix}
+			      1 & 1  & 1  & 1  \\
+			      1 & -i & -1 & i  \\
+			      1 & -1 & 1  & -1 \\
+			      1 & i  & -1 & -i
+		      \end{pmatrix}.
+	      \]
 
 	\item {\bfseries Calcule la transformada $\mathbf{X} = F\mathbf{x}$ componente por componente. Escriba el vector resultante $\mathbf{X} = [X_0, X_1, X_2, X_3]$.}
 
-	\vspace{4cm}
+	      Cada componente de la transformada se calcula como $X_k = \sum_{n=0}^{3} x_n \, \omega_4^{kn}$:
+
+	      \textbf{$\boldsymbol{X_0}$:}
+	      \[
+		      X_0 = x_0 \cdot 1 + x_1 \cdot 1 + x_2 \cdot 1 + x_3 \cdot 1 = 1 + 2 + 0 + (-1) = 2.
+	      \]
+
+	      \textbf{$\boldsymbol{X_1}$:}
+	      \[
+		      X_1 = x_0 \cdot 1 + x_1 \cdot (-i) + x_2 \cdot (-1) + x_3 \cdot i = 1 - 2i + 0 - i = 1 - 3i.
+	      \]
+
+	      \textbf{$\boldsymbol{X_2}$:}
+	      \[
+		      X_2 = x_0 \cdot 1 + x_1 \cdot (-1) + x_2 \cdot 1 + x_3 \cdot (-1) = 1 - 2 + 0 + 1 = 0.
+	      \]
+
+	      \textbf{$\boldsymbol{X_3}$:}
+	      \[
+		      X_3 = x_0 \cdot 1 + x_1 \cdot i + x_2 \cdot (-1) + x_3 \cdot (-i) = 1 + 2i + 0 + i = 1 + 3i.
+	      \]
+
+	      Por lo tanto, el vector transformado es:
+	      \[
+		      \boxed{\mathbf{X} = [X_0, X_1, X_2, X_3] = [2,\; 1 - 3i,\; 0,\; 1 + 3i].}
+	      \]
 
 	\item {\bfseries Verifique que se cumple la simetría conjugada para señales reales: $X_{4-k} = \overline{X_k}$.}
 
-	\vspace{4cm}
+	      Para una señal real $\mathbf{x} \in \mathbb{R}^N$, la DFT cumple $X_{N-k} = \overline{X_k}$. Verificamos caso por caso:
+
+	      \begin{itemize}
+		      \item \textbf{$k = 0$:} $X_{4-0} = X_4 = X_0 = 2$ (por periodicidad). Además $\overline{X_0} = \overline{2} = 2$. \checkmark
+
+		      \item \textbf{$k = 1$:} $X_{4-1} = X_3 = 1 + 3i$. Además $\overline{X_1} = \overline{1 - 3i} = 1 + 3i$. \checkmark
+
+		      \item \textbf{$k = 2$:} $X_{4-2} = X_2 = 0$. Además $\overline{X_2} = \overline{0} = 0$. \checkmark
+
+		      \item \textbf{$k = 3$:} $X_{4-3} = X_1 = 1 - 3i$. Además $\overline{X_3} = \overline{1 + 3i} = 1 - 3i$. \checkmark
+	      \end{itemize}
+
+	      Se verifica la simetría conjugada en todos los casos.
+
+	      \vspace{5mm}
 
 	\item {\bfseries Dibuje aproximadamente la magnitud $|X_k|$ para $k = 0, 1, 2, 3$ y comente qué frecuencias están presentes.}
 
-	\vspace{4cm}
+	      Calculamos las magnitudes:
+	      \[
+		      |X_0| = 2, \qquad |X_1| = \sqrt{1^2 + 3^2} = \sqrt{10} \approx 3.16, \qquad |X_2| = 0, \qquad |X_3| = \sqrt{10} \approx 3.16.
+	      \]
+
+	      \begin{center}
+		      \shorthandoff{>}
+		      \begin{tikzpicture}[scale=0.9]
+			      \begin{scope}
+				      \draw[->] (-0.5, 0) -- (5, 0) node[right] {$k$};
+				      \draw[->] (0, -0.3) -- (0, 4.2) node[above] {$|X_k|$};
+
+				      % Barras
+				      \fill[blue!60] (0.5, 0) rectangle (1.2, 2);
+				      \fill[red!60]  (1.7, 0) rectangle (2.4, 3.16);
+				      \fill[red!60]  (4.1, 0) rectangle (4.8, 3.16);
+
+				      % Etiquetas en x
+				      \node[below] at (0.85, 0) {$0$};
+				      \node[below] at (2.05, 0) {$1$};
+				      \node[below] at (3.25, 0) {$2$};
+				      \node[below] at (4.45, 0) {$3$};
+
+				      % Valores encima
+				      \node[above] at (0.85, 2)    {\small $2$};
+				      \node[above] at (2.05, 3.16) {\small $\sqrt{10}$};
+				      \node[above] at (3.25, 0.05) {\small $0$};
+				      \node[above] at (4.45, 3.16) {\small $\sqrt{10}$};
+
+				      % Líneas guía
+				      \draw[dashed, gray!50] (0, 2) -- (5, 2);
+				      \draw[dashed, gray!50] (0, 3.16) -- (5, 3.16);
+			      \end{scope}
+		      \end{tikzpicture}
+	      \end{center}
+
+	      El espectro de magnitudes muestra que:
+	      \begin{itemize}
+		      \item $|X_0| = 2$ corresponde a la suma de los valores del arreglo. Si dividimos entre $N$ obtenemos el valor promedio de la señal (0.5), esto significa que la señal no está centrada en cero.
+		      \item $|X_1| = |X_3| = \sqrt{10}$ indica la presencia de la frecuencia fundamental $k = 1$ y su réplica $k = 3$ (debido a la simetría conjugada).
+		      \item $|X_2| = 0$ indica que la frecuencia $k = 2$ no está presente, esto significa que la señal no tiene oscilaciones con periodo $T = 4/2 = 2$.
+	      \end{itemize}
 
 \end{enumerate}
+'

@@ -9,18 +9,83 @@
 \begin{enumerate}[a)]
 	\item {\bfseries Escriba los bits $x_1$, $x_2$ de $x = 2$.}
 
-	\vspace{3cm}
+	      El número $x = 2$ en binario con $n = 2$ bits se escribe como $10_2$, es decir:
+	      \[
+		      x = 2 \implies x_1 x_2 = 10, \quad \text{con } x_1 = 1 \text{ (bit más significativo)}, \quad x_2 = 0 \text{ (bit menos significativo)}.
+	      \]
 
 	\item {\bfseries Calcule las fracciones binarias $0.x_1 x_2$ y $0.x_2$ en forma decimal (o fraccionaria).}
 
-	\vspace{3cm}
+	      Las fracciones binarias se calculan como:
+	      \[
+		      0.x_1 x_2 = \frac{x_1}{2} + \frac{x_2}{4} = \frac{1}{2} + \frac{0}{4} = \frac{1}{2}.
+	      \]
+	      \[
+		      0.x_2 = \frac{x_2}{2} = \frac{0}{2} = 0.
+	      \]
 
 	\item {\bfseries Determine los factores de fase $e^{2\pi i(0.x_1 x_2)}$ y $e^{2\pi i(0.x_2)}$.}
 
-	\vspace{3cm}
+	      Sustituyendo los valores calculados en el inciso anterior:
+	      \[
+		      e^{2\pi i(0.x_1 x_2)} = e^{2\pi i \cdot 1/2} = e^{i\pi} = -1.
+	      \]
+	      \[
+		      e^{2\pi i(0.x_2)} = e^{2\pi i \cdot 0} = e^0 = 1.
+	      \]
 
 	\item {\bfseries Escriba explícitamente el estado $\text{QFT}\ket{10}$ como producto de dos qubits y también como combinación lineal de los cuatro estados base $\ket{00}$, $\ket{01}$, $\ket{10}$, $\ket{11}$. Verifique que el resultado coincide con el obtenido mediante la definición matricial de la QFT para $n = 2$.}
 
-	\vspace{5cm}
+	      \textbf{Forma producto.} Sustituyendo los factores de fase en la representación producto:
+	      \[
+		      \text{QFT}\ket{10} = \frac{1}{2}\left(\ket{0} + (-1)\ket{1}\right) \otimes \left(\ket{0} + (1)\ket{1}\right) = \frac{1}{2}\left(\ket{0} - \ket{1}\right) \otimes \left(\ket{0} + \ket{1}\right).
+	      \]
+
+	      \textbf{Combinación lineal.} Expandiendo el producto tensorial:
+	      \begin{align*}
+		      \text{QFT}\ket{10} & = \frac{1}{2}\left(\ket{0} - \ket{1}\right) \otimes \left(\ket{0} + \ket{1}\right)                                      \\
+		                         & = \frac{1}{2}\left(\ket{0}\otimes\ket{0} + \ket{0}\otimes\ket{1} - \ket{1}\otimes\ket{0} - \ket{1}\otimes\ket{1}\right) \\
+		                         & = \frac{1}{2}\left(\ket{00} + \ket{01} - \ket{10} - \ket{11}\right).
+	      \end{align*}
+
+	      \[
+		      \boxed{\text{QFT}\ket{10} = \frac{1}{2}\ket{00} + \frac{1}{2}\ket{01} - \frac{1}{2}\ket{10} - \frac{1}{2}\ket{11}.}
+	      \]
+
+	      \textbf{Verificación matricial.} La definición matricial de la QFT para $N = 2^n = 4$ es:
+	      \[
+		      (\text{QFT})_{jk} = \frac{1}{\sqrt{N}} \, \omega_N^{jk}, \quad \omega_N = e^{2\pi i / N}.
+	      \]
+	      Con $N = 4$ y $\omega_4 = e^{2\pi i/4} = i$, la matriz es:
+	      \[
+		      \text{QFT}_4 = \frac{1}{2}
+		      \begin{pmatrix}
+			      1 & 1  & 1  & 1  \\
+			      1 & i  & -1 & -i \\
+			      1 & -1 & 1  & -1 \\
+			      1 & -i & -1 & i
+		      \end{pmatrix}.
+	      \]
+
+	      Para $\ket{x} = \ket{2}$ (tercera columna, $k = 2$), tomamos la columna correspondiente:
+	      \[
+		      \text{QFT}\ket{2} = \frac{1}{2}
+		      \begin{pmatrix}
+			      1 \\ -1 \\ 1 \\ -1
+		      \end{pmatrix}.
+	      \]
+
+	      Esto corresponde al estado:
+	      \[
+		      \text{QFT}\ket{10} = \frac{1}{2}\left(\ket{00} - \ket{01} + \ket{10} - \ket{11}\right).
+	      \]
+
+	      \textbf{Nota:} La diferencia de signos entre ambos resultados se debe a la endianidad. En la representación producto, el primer qubit del tensor corresponde al bit más significativo ($x_1$), mientras que en la definición matricial el mapeo de la base computacional puede seguir la convención opuesta. Si en la forma matricial usamos el orden $\ket{j} = \ket{j_2 j_1}$ (bit menos significativo primero), la columna $k = 2$ de la QFT da:
+	      \[
+		      \text{QFT}\ket{2} \xrightarrow{\text{reordenar bits}} \frac{1}{2}\left(\ket{00} + \ket{01} - \ket{10} - \ket{11}\right),
+	      \]
+	      que coincide con el resultado de la representación producto. Esto se debe a que la QFT en circuito produce los qubits en orden invertido, lo cual se corrige con compuertas SWAP al final.
+
+	      \vspace{1cm}
 
 \end{enumerate}
