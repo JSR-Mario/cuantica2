@@ -1,0 +1,173 @@
+{\bfseries Algoritmo de Shor para factorizar $N=21$.
+
+Se desea factorizar $N=21$ utilizando el algoritmo de Shor. Se elige el número aleatorio $a=5$, que es coprimo con 21. Se utiliza un registro de fase con $t=5$ qubits, por lo que $Q = 2^5 = 32$. El registro de trabajo tiene $m = \lceil \log_2 21 \rceil = 5$ qubits, inicializado en $\ket{1}$.}
+
+{\bfseries Parte 1: Período clásico.}
+
+{\bfseries (a) Calcule el período $r$ de la función $f(x) = 5^x \bmod 21$, es decir, el menor entero positivo $r$ tal que $5^r \equiv 1 \pmod{21}$.}
+
+Calculamos las potencias sucesivas de $5$ módulo $21$:
+\begin{align*}
+    5^1 & \equiv 5 \pmod{21},                                             \\
+    5^2 & \equiv 25 \equiv 4 \pmod{21},                                   \\
+    5^3 & \equiv 5 \cdot 4 = 20 \equiv -1 \pmod{21},                      \\
+    5^4 & \equiv 5 \cdot 20 = 100 \equiv 100 - 4 \cdot 21 = 16 \pmod{21}, \\
+    5^5 & \equiv 5 \cdot 16 = 80 \equiv 80 - 3 \cdot 21 = 17 \pmod{21},   \\
+    5^6 & \equiv 5 \cdot 17 = 85 \equiv 85 - 4 \cdot 21 = 1 \pmod{21}.
+\end{align*}
+
+El menor entero positivo tal que $5^r \equiv 1 \pmod{21}$ es:
+$$
+    \boxed{r = 6.}
+$$
+
+\vspace{0.5cm}
+
+{\bfseries (b) Verifique que $5^{r/2} \not\equiv \pm 1 \pmod{21}$. ¿Por qué es importante esta condición?}
+
+Con $r = 6$, tenemos $r/2 = 3$. Del cálculo anterior:
+$$
+    5^3 \equiv 20 \equiv -1 \pmod{21}.
+$$
+
+Entonces $5^{r/2} \equiv -1 \pmod{21}$, lo que \textbf{no} satisface la condición requerida (necesitamos $5^{r/2} \not\equiv \pm 1$).
+
+Esta condición es importante porque la factorización se basa en que $5^r - 1 = (5^{r/2}-1)(5^{r/2}+1) \equiv 0 \pmod{21}$, y los factores no triviales se obtienen como $\gcd(5^{r/2} \pm 1, 21)$. Si $5^{r/2} \equiv -1 \pmod{21}$, entonces $5^{r/2}+1 \equiv 0 \pmod{21}$, lo que da $\gcd(5^{r/2}+1, 21) = 21$ (trivial), y $\gcd(5^{r/2}-1, 21) = \gcd(19, 21) = 1$ (también trivial). En este caso la elección $a=5$ no produce factores útiles y habría que reiniciar el algoritmo con otro valor de $a$.
+
+\vspace{0.5cm}
+
+{\bfseries Parte 2: Estado antes de la QFT inversa.}
+
+{\bfseries (a) Suponga que, tras la exponenciación modular controlada y una medición conceptual del registro de trabajo, el primer registro colapsa a un estado de la forma
+    $$
+        \ket{\phi} = \frac{1}{\sqrt{M}} \sum_{k=0}^{M-1} \ket{x_0 + kr},
+    $$
+    donde $x_0 = 0$ y $M = Q/r$ (suponiendo que $Q$ es múltiplo de $r$ para simplificar). Escriba explícitamente $\ket{\phi}$ para los valores de $Q$, $r$ y $x_0$ obtenidos (aunque $Q$ no sea múltiplo exacto, use esta expresión idealizada).}
+
+Con $Q = 32$, $r = 6$ y $x_0 = 0$, usamos la expresión idealizada con $M = Q/r \approx 32/6$. Tomando $M = 5$ (ya que $x_0 + 5r = 30 < 32$ y $x_0 + 6r = 36 > 32$), el estado es:
+$$
+    \ket{\phi} = \frac{1}{\sqrt{5}}\Big(\ket{0} + \ket{6} + \ket{12} + \ket{18} + \ket{24}\Big).
+$$
+
+Es decir, una superposición uniforme sobre los múltiplos de $r = 6$ que caben en el registro de $t = 5$ qubits.
+
+\vspace{0.5cm}
+
+{\bfseries (b) Aplique la transformada de Fourier cuántica inversa ($\text{QFT}^\dagger$) al estado $\ket{\phi}$.
+    \begin{itemize}
+        \item Muestre que la amplitud del estado $\ket{m}$ es proporcional a la suma geométrica $\sum_{k=0}^{M-1} e^{-2\pi i m k r / Q}$.
+        \item Determine para qué valores de $m$ (módulo $Q$) se produce interferencia constructiva (es decir, la suma es máxima). ¿Cuál es el valor de la amplitud en esos casos?
+    \end{itemize}
+}
+
+La $\text{QFT}^\dagger$ actúa sobre la base computacional como:
+$$
+    \text{QFT}^\dagger \ket{j} = \frac{1}{\sqrt{Q}} \sum_{m=0}^{Q-1} e^{-2\pi i j m / Q} \ket{m}.
+$$
+
+Aplicando al estado $\ket{\phi}$:
+$$
+    \text{QFT}^\dagger \ket{\phi} = \frac{1}{\sqrt{M}} \sum_{k=0}^{M-1} \frac{1}{\sqrt{Q}} \sum_{m=0}^{Q-1} e^{-2\pi i (x_0 + kr) m / Q} \ket{m}.
+$$
+
+Con $x_0 = 0$, la amplitud del estado $\ket{m}$ es:
+$$
+    \alpha_m = \frac{1}{\sqrt{MQ}} \sum_{k=0}^{M-1} e^{-2\pi i m k r / Q}.
+$$
+
+Esto es efectivamente proporcional a la suma geométrica $S(m) = \sum_{k=0}^{M-1} e^{-2\pi i m k r / Q}$.
+
+Sea $\omega = e^{-2\pi i m r / Q}$. Si $\omega = 1$, es decir $mr/Q \in \mathbb{Z}$, todos los términos suman en fase y $S(m) = M$. Esto ocurre cuando:
+$$
+    \frac{mr}{Q} = \frac{6m}{32} = \frac{3m}{16} \in \mathbb{Z} \quad \Longleftrightarrow \quad 16 \mid 3m.
+$$
+
+Como $\gcd(3,16) = 1$, se requiere $16 \mid m$. Los valores en el rango $[0, 31]$ son $m \in \{0, 16\}$.
+
+Sin embargo, dado que $Q$ no es múltiplo exacto de $r$, existen picos adicionales cercanos a los valores $m$ que satisfacen $m/Q \approx j/r$ para $j = 0, 1, \ldots, r-1$. Los valores ideales serían $m = jQ/r = 32j/6$, que para $j = 0, 1, 2, 3, 4, 5$ dan $m \approx 0, 5.33, 10.67, 16, 21.33, 26.67$. Los picos de la suma geométrica se concentran en los enteros más cercanos a estos valores.
+
+En los puntos de interferencia constructiva perfecta ($\omega = 1$), la amplitud vale:
+$$
+    |\alpha_m| = \frac{M}{\sqrt{MQ}} = \sqrt{\frac{M}{Q}} = \sqrt{\frac{5}{32}}.
+$$
+
+\vspace{0.5cm}
+
+{\bfseries Parte 3: Probabilidades de medición.}
+
+{\bfseries (a) Calcule la probabilidad de obtener cada uno de los valores $m$ que maximizan la interferencia. ¿Cuántos valores de $m$ diferentes son posibles? ¿Qué relación guardan con $Q/r$?}
+
+En el caso idealizado, hay $r = 6$ picos correspondientes a las fases $j/r$ con $j = 0, 1, \ldots, 5$. Los valores de $m$ que maximizan la interferencia son los enteros más cercanos a $m_j = jQ/r = 32j/6$:
+
+\begin{center}
+    \begin{tabular}{c|c|c}
+        $j$ & $m_j = 32j/6$ & $m$ más cercano(s) \\ \hline
+        $0$ & $0$           & $0$                \\
+        $1$ & $5.33$        & $5$                \\
+        $2$ & $10.67$       & $11$               \\
+        $3$ & $16$          & $16$               \\
+        $4$ & $21.33$       & $21$               \\
+        $5$ & $26.67$       & $27$
+    \end{tabular}
+\end{center}
+
+Hay \textbf{6 valores} de $m$ con alta probabilidad ($r = 6$ picos), uno por cada valor de $j$. En la aproximación idealizada, la probabilidad de cada pico es aproximadamente:
+$$
+    P(m_j) \approx \frac{M}{Q} = \frac{5}{32} \approx 0.156.
+$$
+
+La suma total es $6 \times 5/32 = 30/32 \approx 0.94$, capturando la gran mayoría de la probabilidad. Los valores de $m$ están espaciados aproximadamente por $Q/r \approx 5.33$.
+
+\vspace{0.5cm}
+
+{\bfseries (b) Suponga que la medición del registro de fase produce $m=5$.
+    \begin{itemize}
+        \item ¿Cuál es la fracción $m/Q = 5/32 = 0.15625$?
+        \item Aplique el algoritmo de fracciones continuas a esta fracción para obtener una fracción irreducible cuyo denominador sea un candidato a período. Muestre los pasos para obtener los convergentes hasta que el denominador supere un cierto límite (por ejemplo, $\sqrt{N}$).
+        \item A partir del denominador obtenido, explique cómo se recupera el verdadero período $r$ y cómo se calcularían los factores de 21 (aunque en este caso particular la factorización falla porque $5^{r/2} \equiv -1$).
+    \end{itemize}
+}
+
+La fracción medida es $m/Q = 5/32 = 0.15625$, que debería aproximar algún valor $j/r$.
+
+\textbf{Fracciones continuas.} Expandimos $5/32$:
+\begin{align*}
+    \frac{5}{32} & = \frac{1}{32/5} = \frac{1}{6 + 2/5} = \cfrac{1}{6 + \cfrac{1}{5/2}} = \cfrac{1}{6 + \cfrac{1}{2 + \cfrac{1}{2}}}.
+\end{align*}
+
+La representación en fracciones continuas es $[0; 6, 2, 2]$. Los convergentes son:
+
+\begin{center}
+    \begin{tabular}{c|c|c}
+        Convergente & Fracción & Denominador \\ \hline
+        $[0]$       & $0/1$    & $1$         \\
+        $[0;6]$     & $1/6$    & $6$         \\
+        $[0;6,2]$   & $2/13$   & $13$        \\
+        $[0;6,2,2]$ & $5/32$   & $32$
+    \end{tabular}
+\end{center}
+
+Usamos el límite $\sqrt{N} = \sqrt{21} \approx 4.58$. El convergente $[0;6]$ tiene denominador $6 > 4.58$, que ya supera el límite. El candidato a período es $r' = 6$.
+
+\textbf{Verificación y factorización.} Verificamos: $5^6 \equiv 1 \pmod{21}$, así que $r = 6$ es correcto. Para factorizar, se calcula:
+$$
+    \gcd(5^{r/2} - 1, 21) = \gcd(5^3 - 1, 21) = \gcd(124, 21) = \gcd(124, 21).
+$$
+$124 = 5 \cdot 21 + 19$, luego $\gcd(124, 21) = \gcd(21, 19) = \gcd(19, 2) = \gcd(2,1) = 1$.
+$$
+    \gcd(5^{r/2} + 1, 21) = \gcd(5^3 + 1, 21) = \gcd(126, 21) = 21.
+$$
+
+Ambos resultados son triviales ($1$ y $21$), lo que confirma que esta elección de $a = 5$ no produce factores útiles porque $5^{r/2} = 5^3 \equiv -1 \pmod{21}$. En la práctica, se reiniciaría el algoritmo con otro valor de $a$ (por ejemplo, $a = 2$, que da $r = 6$ y $2^3 = 8 \not\equiv \pm 1 \pmod{21}$, produciendo $\gcd(7, 21) = 7$ y $\gcd(9, 21) = 3$).
+
+\vspace{0.5cm}
+
+{\bfseries Parte 4: Discusión.}
+
+{\bfseries (a) ¿Qué sucedería si la medición hubiera dado $m=0$? ¿Por qué ese resultado no es útil? (Ayuda: recuerde que la fase estimada es $k/r$).}
+
+Si $m = 0$, la fase estimada es $m/Q = 0/32 = 0$. Esto corresponde a $j/r = 0/r = 0$ para cualquier valor de $r$. Al aplicar fracciones continuas a $0$, obtenemos la fracción $0/1$, cuyo denominador es $1$. Esto no aporta información sobre el período $r$.
+
+El resultado $m = 0$ ocurre cuando la medición del registro de fase selecciona la componente $j = 0$, que es la de fase nula. Todos los estados $\ket{x_0 + kr}$ contribuyen con la misma fase (cero), por lo que no hay información sobre el espaciamiento $r$ codificada en este resultado. Es un resultado ``basura'' que simplemente se descarta, y se repite la ejecución del algoritmo hasta obtener un $m \neq 0$.
+
+\vspace{1cm}

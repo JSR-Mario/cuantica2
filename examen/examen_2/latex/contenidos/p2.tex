@@ -1,0 +1,93 @@
+{\bfseries Deutsch-Jozsa con una función no prometida.
+
+Considere la función $f:\{0,1\}^2 \to \{0,1\}$ definida por la tabla:
+
+\begin{center}
+    \begin{tabular}{c|c}
+        $x$  & $f(x)$ \\ \hline
+        $00$ & $0$    \\
+        $01$ & $0$    \\
+        $10$ & $0$    \\
+        $11$ & $1$
+    \end{tabular}
+\end{center}
+
+Es decir, $f(x) = x_1 \wedge x_2$ (AND lógico de los dos bits). Esta función no es constante ni balanceada (tiene tres ceros y un uno).}
+
+{\bfseries Aplique el algoritmo de Deutsch-Jozsa para $n=2$ paso a paso, mostrando el estado después de cada etapa:
+\begin{itemize}
+    \item Inicialización: $\ket{\psi_0} = \ket{00} \otimes \ket{1}$.
+    \item Primera capa de Hadamard en ambos registros.
+    \item Aplicación del oráculo $U_f$: $U_f\ket{x}\ket{y} = \ket{x}\ket{y \oplus f(x)}$ (use la propiedad del qubit auxiliar en $\ket{-}$ para obtener la fase).
+    \item Segunda capa de Hadamard solo en el primer registro.
+    \item Medición del primer registro. Calcule explícitamente las probabilidades de obtener $\ket{00}$, $\ket{01}$, $\ket{10}$ y $\ket{11}$.
+    \item ¿El algoritmo indicaría (erróneamente) que la función es constante o balanceada? Justifique.
+    \item Explique por qué el algoritmo de Deutsch-Jozsa requiere la promesa de que la función es constante o balanceada para funcionar correctamente.
+\end{itemize}
+}
+
+\textbf{Inicialización.} El estado inicial es:
+$$
+    \ket{\psi_0} = \ket{00} \otimes \ket{1}.
+$$
+
+\textbf{Primera capa de Hadamard.} Aplicamos $H^{\otimes 2}$ al primer registro y $H$ al qubit auxiliar:
+$$
+    \ket{\psi_1} = H^{\otimes 2}\ket{00} \otimes H\ket{1} = \frac{1}{2}\big(\ket{00}+\ket{01}+\ket{10}+\ket{11}\big) \otimes \ket{-}.
+$$
+
+Es decir:
+$$
+    \ket{\psi_1} = \frac{1}{2}\sum_{x \in \{0,1\}^2} \ket{x} \otimes \ket{-}.
+$$
+
+\textbf{Aplicación del oráculo.} Usando que el qubit auxiliar está en $\ket{-}$, el oráculo produce el phase kickback: $U_f\ket{x}\ket{-} = (-1)^{f(x)}\ket{x}\ket{-}$. Sustituyendo los valores de $f$:
+$$
+    \ket{\psi_2} = \frac{1}{2}\Big[(-1)^{f(00)}\ket{00} + (-1)^{f(01)}\ket{01} + (-1)^{f(10)}\ket{10} + (-1)^{f(11)}\ket{11}\Big]\ket{-}
+$$
+$$
+    = \frac{1}{2}\Big[\ket{00} + \ket{01} + \ket{10} - \ket{11}\Big]\ket{-}.
+$$
+
+Solo $\ket{11}$ adquiere un signo negativo, ya que es el único input con $f(x)=1$.
+
+\textbf{Segunda capa de Hadamard (solo primer registro).} Necesitamos aplicar $H^{\otimes 2}$ al estado $\frac{1}{2}(\ket{00}+\ket{01}+\ket{10}-\ket{11})$. Factorizando por qubits:
+$$
+    \frac{1}{2}(\ket{00}+\ket{01}+\ket{10}-\ket{11}) = \frac{1}{2}\Big[\ket{0}(\ket{0}+\ket{1}) + \ket{1}(\ket{0}-\ket{1})\Big].
+$$
+
+Reconocemos que $\frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) = H\ket{0} = \ket{+}$ y $\frac{1}{\sqrt{2}}(\ket{0}-\ket{1}) = H\ket{1} = \ket{-}$, así que:
+$$
+    = \frac{1}{\sqrt{2}}\Big[\ket{0}\ket{+} + \ket{1}\ket{-}\Big].
+$$
+
+Aplicando $H \otimes H$. Para el segundo qubit: $H\ket{+} = \ket{0}$ y $H\ket{-} = \ket{1}$. Para el primer qubit: expandimos $H\ket{0} = \ket{+}$ y $H\ket{1} = \ket{-}$:
+$$
+    \ket{\psi_3} = \frac{1}{\sqrt{2}}\Big[\frac{\ket{0}+\ket{1}}{\sqrt{2}}\ket{0} + \frac{\ket{0}-\ket{1}}{\sqrt{2}}\ket{1}\Big]
+$$
+$$
+    = \frac{1}{2}\Big[\ket{0}\ket{0} + \ket{1}\ket{0} + \ket{0}\ket{1} - \ket{1}\ket{1}\Big]
+$$
+$$
+    = \frac{1}{2}\Big[\ket{00} + \ket{10} + \ket{01} - \ket{11}\Big].
+$$
+
+\textbf{Medición del primer registro.} Las probabilidades son:
+$$
+    P(\ket{00}) = \left|\frac{1}{2}\right|^2 = \frac{1}{4}, \qquad P(\ket{01}) = \left|\frac{1}{2}\right|^2 = \frac{1}{4},
+$$
+$$
+    P(\ket{10}) = \left|\frac{1}{2}\right|^2 = \frac{1}{4}, \qquad P(\ket{11}) = \left|\frac{-1}{2}\right|^2 = \frac{1}{4}.
+$$
+
+Todos los resultados son equiprobables con probabilidad $1/4$.
+
+\vspace{0.3cm}
+
+\textbf{¿Constante o balanceada?} En el algoritmo de Deutsch-Jozsa, si se mide $\ket{00}$ se concluye que $f$ es constante; cualquier otro resultado indica balanceada. Como $P(\ket{00}) = 1/4$, hay un 25\% de probabilidad de declarar (erróneamente) que $f$ es constante, y un 75\% de declararla balanceada. En ambos casos la conclusión es incorrecta, ya que $f$ no es ni constante ni balanceada.
+
+\textbf{¿Por qué se necesita la promesa?} El algoritmo de Deutsch-Jozsa está diseñado para distinguir entre exactamente dos casos: $f$ constante (donde la interferencia es completamente constructiva en $\ket{0}^{\otimes n}$) o $f$ balanceada (donde la interferencia es completamente destructiva en $\ket{0}^{\otimes n}$). La promesa garantiza que la amplitud de $\ket{0}^{\otimes n}$ tras la segunda Hadamard sea exactamente 1 o exactamente 0, permitiendo una decisión determinística.
+
+Sin la promesa, como en este caso, la amplitud de $\ket{0}^{\otimes n}$ puede tomar cualquier valor intermedio (aquí $1/2$), y el resultado de la medición es probabilístico. El algoritmo no puede decidir de forma determinística porque la interferencia no es ni totalmente constructiva ni totalmente destructiva. Esto muestra que el poder del algoritmo reside precisamente en la estructura restringida que la promesa impone sobre $f$.
+
+\vspace{1cm}

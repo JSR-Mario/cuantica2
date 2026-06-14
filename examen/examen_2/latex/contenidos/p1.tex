@@ -1,0 +1,143 @@
+{\bfseries Criterios de DiVincenzo y decoherencia de fase.}
+
+{\bfseries (a) Enumere los cinco criterios de DiVincenzo para una computadora cuántica escalable. Para cada uno, indique brevemente su significado físico. Luego, analice el protocolo de teletransportación cuántica (circuito estándar) e identifique explícitamente qué criterios se satisfacen en cada etapa (preparación de estado, operaciones locales, medición, comunicación clásica, etc.).}
+
+Los cinco criterios de DiVincenzo son:
+
+\begin{enumerate}
+    \item \textbf{Sistema físico escalable de qubits bien caracterizados.} Se requiere un conjunto de qubits con un espacio de Hilbert bien definido y que el sistema pueda crecer en tamaño sin perder control individual sobre cada qubit.
+
+    \item \textbf{Capacidad de inicializar el sistema en un estado fiducial.} Se debe poder preparar todos los qubits en un estado conocido de manera confiable antes de cada cómputo.
+
+    \item \textbf{Tiempos de decoherencia largos comparados con las operaciones.} Las compuertas cuánticas deben poder ejecutarse mucho más rápido de lo que el entorno destruye la coherencia del sistema.
+
+    \item \textbf{Conjunto universal de compuertas cuánticas.} Se necesita un conjunto finito de operaciones unitarias con el cual se pueda aproximar cualquier unitaria arbitraria sobre $n$ qubits.
+
+    \item \textbf{Capacidad de medición de qubits individuales.} Al finalizar el algoritmo se debe poder leer el estado de cada qubit en la base computacional con alta fidelidad.
+\end{enumerate}
+
+\textbf{Análisis del protocolo de teletransportación cuántica.} El circuito estándar tiene a Alice con los qubits 1 y 2 y Bob con el qubit 3:
+
+\begin{itemize}
+    \item \textbf{Preparación del par de Bell} $\ket{\Phi^+}_{23}$: se inicializan los qubits 2 y 3 en $\ket{00}$ (\emph{criterio 2}), se aplican $H$ y CNOT (\emph{criterio 4}), y se requiere un sistema con al menos 3 qubits (\emph{criterio 1}).
+
+    \item \textbf{Operaciones locales de Alice} (CNOT entre qubits 1--2 y $H$ sobre qubit 1): involucra el \emph{criterio 4} (compuertas universales). Estas operaciones deben completarse antes de que el estado decaiga (\emph{criterio 3}).
+
+    \item \textbf{Medición de los qubits 1 y 2} por parte de Alice: satisface el \emph{criterio 5}. El resultado son dos bits clásicos $(m_1, m_2)$.
+
+    \item \textbf{Comunicación clásica y corrección de Bob}: Alice envía $(m_1, m_2)$ por un canal clásico; Bob aplica $X^{m_2} Z^{m_1}$ sobre el qubit 3, lo que requiere nuevamente el \emph{criterio 4}.
+\end{itemize}
+
+En resumen, el protocolo ejerce los cinco criterios: el sistema debe ser escalable (al menos 3 qubits), inicializable, coherente durante las operaciones, admitir compuertas universales y permitir mediciones individuales.
+
+\vspace{0.5cm}
+
+{\bfseries (b) Considere un qubit preparado en el estado
+    $$
+        \ket{+} = \frac{\ket{0} + \ket{1}}{\sqrt{2}}.
+    $$
+    El qubit sufre un canal de desfase (dephasing) descrito por los operadores de Kraus
+    $$
+        E_0 = \sqrt{1-p}\, I, \qquad E_1 = \sqrt{p}\, Z,
+    $$
+    donde $Z$ es la matriz de Pauli $Z$ y $0 \leq p \leq 1$.
+    \begin{itemize}
+        \item Calcule la matriz densidad $\rho' = \mathcal{E}(\rho)$ después del canal, partiendo de $\rho = \ket{+}\bra{+}$.
+        \item Muestre explícitamente que los términos de coherencia (elementos fuera de la diagonal) se multiplican por el factor $(1-2p)$.
+        \item ¿Para qué valor de $p$ el estado se vuelve completamente clásico (es decir, la matriz densidad es proporcional a la identidad)? Interprete físicamente.
+    \end{itemize}
+}
+
+El estado inicial en forma matricial es:
+$$
+    \rho = \ket{+}\bra{+} = \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix}.
+$$
+
+El canal de desfase actúa como $\mathcal{E}(\rho) = E_0 \rho E_0^\dagger + E_1 \rho E_1^\dagger$:
+$$
+    E_0 \rho E_0^\dagger = (1-p)\, I \rho I = (1-p)\, \rho = \frac{1-p}{2}\begin{pmatrix} 1 & 1 \\ 1 & 1 \end{pmatrix},
+$$
+$$
+    E_1 \rho E_1^\dagger = p\, Z \rho Z = p \cdot \frac{1}{2}\begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix},
+$$
+donde usamos que $Z\ket{0}=\ket{0}$, $Z\ket{1}=-\ket{1}$, de modo que $Z$ cambia el signo de los elementos fuera de la diagonal.
+
+Sumando:
+$$
+    \rho' = \frac{1}{2}\begin{pmatrix} 1 & (1-p) - p \\ (1-p) - p & 1 \end{pmatrix} = \frac{1}{2}\begin{pmatrix} 1 & 1-2p \\ 1-2p & 1 \end{pmatrix}.
+$$
+
+Los elementos diagonales permanecen iguales ($1/2$ cada uno), mientras que los \textbf{términos de coherencia} (fuera de la diagonal) pasan de $1/2$ a $\frac{1-2p}{2}$, es decir, se multiplican exactamente por el factor $(1-2p)$.
+
+Para que $\rho'$ sea proporcional a la identidad necesitamos que los elementos fuera de la diagonal se anulen:
+$$
+    1 - 2p = 0 \implies \boxed{p = \frac{1}{2}.}
+$$
+
+En ese caso $\rho' = \frac{1}{2}I$, que es el estado completamente mixto. Físicamente, con $p = 1/2$ cada aplicación del canal tiene la misma probabilidad de aplicar $I$ o $Z$, destruyendo toda la información de fase. El qubit pierde completamente su coherencia y se comporta como una mezcla clásica equiprobable de $\ket{0}$ y $\ket{1}$.
+
+\vspace{0.5cm}
+
+{\bfseries (c) Suponga ahora que el mismo canal de desfase afecta sólo al qubit de control en el algoritmo de Deutsch (para una función $f:\{0,1\}\to\{0,1\}$). El algoritmo sigue el circuito ideal excepto que, antes de aplicar la segunda compuerta de Hadamard, el qubit de control pasa a través del canal de desfase. Considere el caso en que la función es constante ($f(0)=f(1)=0$).
+    \begin{itemize}
+        \item Escriba el estado del qubit de control justo antes del canal (después del oráculo).
+        \item Aplique el canal de desfase y luego la segunda Hadamard. Calcule la probabilidad de medir $\ket{0}$ en el qubit de control.
+        \item ¿Cómo cambia esta probabilidad en función de $p$? ¿Sigue siendo posible distinguir una función constante de una balanceada con certeza? Determine la probabilidad de error en la decisión.
+    \end{itemize}
+}
+
+\textbf{Estado del qubit de control después del oráculo.} En el algoritmo de Deutsch, el estado inicial es $\ket{0}\ket{1}$. Tras aplicar $H^{\otimes 2}$ obtenemos $\ket{+}\ket{-}$. El oráculo produce el phase kickback: $\ket{x}\ket{-} \xrightarrow{U_f} (-1)^{f(x)}\ket{x}\ket{-}$.
+
+Para $f$ constante con $f(0)=f(1)=0$, la fase es $(-1)^0 = 1$ para ambos valores de $x$, así que el estado no cambia. El qubit de control justo antes del canal (y antes de la segunda Hadamard) es:
+$$
+    \ket{+} = \frac{\ket{0}+\ket{1}}{\sqrt{2}}.
+$$
+
+Como estado puro, su matriz densidad es $\rho = \ket{+}\bra{+}$.
+
+\textbf{Aplicación del canal de desfase.} Del inciso (b) sabemos que:
+$$
+    \rho' = \mathcal{E}(\ket{+}\bra{+}) = \frac{1}{2}\begin{pmatrix} 1 & 1-2p \\ 1-2p & 1 \end{pmatrix}.
+$$
+
+\textbf{Segunda Hadamard.} Aplicamos $H\rho' H^\dagger$. Recordando que $H = \frac{1}{\sqrt{2}}\begin{pmatrix}1 & 1 \\ 1 & -1\end{pmatrix}$:
+$$
+    H\rho' H^\dagger = \frac{1}{2} H \begin{pmatrix} 1 & 1-2p \\ 1-2p & 1 \end{pmatrix} H = \frac{1}{2}\begin{pmatrix} 2-2p & 0 \\ 0 & 2p \end{pmatrix} = \begin{pmatrix} 1-p & 0 \\ 0 & p \end{pmatrix}.
+$$
+
+La probabilidad de medir $\ket{0}$ en el qubit de control es:
+$$
+    \boxed{P(\ket{0}) = 1 - p.}
+$$
+
+\textbf{Análisis en función de $p$.} Sin ruido ($p=0$), $P(\ket{0})=1$: el algoritmo identifica correctamente la función constante. A medida que $p$ crece, la probabilidad disminuye linealmente. Para $p=1/2$, $P(\ket{0})=1/2$ y el resultado es completamente aleatorio.
+
+En el caso ideal, una función constante siempre da $\ket{0}$ y una balanceada siempre da $\ket{1}$. Con decoherencia, una función constante da $\ket{1}$ con probabilidad $p$, lo que constituye un \emph{falso positivo} (clasificar erróneamente como balanceada). La probabilidad de error en la decisión es:
+$$
+    \boxed{P_{\text{error}} = p.}
+$$
+
+Ya no es posible distinguir con certeza entre constante y balanceada para $p > 0$.
+
+\vspace{0.5cm}
+
+{\bfseries (d) Basándose en los criterios de DiVincenzo, ¿cuál(es) de ellos es(son) más relevantes para combatir los efectos de la decoherencia como la modelada en (b) y (c)? Proponga una estrategia simple de mitigación de errores (por ejemplo, repetición del algoritmo o codificación) y explique qué criterio(s) permite(n) implementarla.}
+
+Creo que los criterios más relevantes son:
+
+\begin{itemize}
+    \item \textbf{Criterio 3} (tiempos de decoherencia largos): si la relación $T_2/t_{\text{gate}}$ es grande, la probabilidad $p$ de desfase por operación es pequeña y los errores del inciso (c) se minimizan.
+
+    \item \textbf{Criterio 2} (inicialización) y \textbf{Criterio 5} (medición): son críticos para la mitigación clásica. Se necesita reiniciar el sistema a un estado inicial rápidamente y medir con alta fidelidad múltiples veces para recolectar estadística confiable.
+\end{itemize}
+
+\textbf{Estrategia de mitigación: repetición por mayoría.} Se ejecuta el algoritmo de Deutsch $N$ veces y se decide por voto mayoritario. Cada ejecución da el resultado correcto con probabilidad $1-p$ (para $p < 1/2$). La probabilidad de error decrece con $N$:
+$$
+    P_{\text{error}}^{(N)} = \sum_{k=\lceil N/2 \rceil}^{N} \binom{N}{k} p^k (1-p)^{N-k}.
+$$
+
+Por ejemplo, con $p = 0.1$ y $N = 3$: $P_{\text{error}}^{(3)} = 3(0.1)^2(0.9) + (0.1)^3 = 0.028$, menor que el $0.1$ original.
+
+Esta estrategia requiere el \textbf{criterio 2} (reinicializar el sistema entre ejecuciones), el \textbf{criterio 5} (medir el resultado de cada ejecución) y el \textbf{criterio 3} (que $p < 1/2$ para que la repetición mejore la estadística). No requiere qubits adicionales ni codificación, lo que la hace práctica para implementaciones con recursos limitados.
+
+\vspace{1cm}
